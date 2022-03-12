@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>PySide2学习记录1</title>
+      <link href="//post/PySide2%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951.html"/>
+      <url>//post/PySide2%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="简单实现：打开一个窗口"><a href="#简单实现：打开一个窗口" class="headerlink" title="简单实现：打开一个窗口"></a>简单实现：打开一个窗口</h1><pre class="line-numbers language-pytho" data-language="pytho"><code class="language-pytho">from PySide2.QtWidgets import QApplication, QMainWindowapp &#x3D; QApplication([])window &#x3D; QMainWindow()window.show()app.exec_()</code></pre><p>上述代码的效果为：</p><img src="/post/PySide2%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951/1.png" class="" title="上述代码执行效果"><p>其中，<code>app</code>为控整个GUI程序的“管理者”。在初始化任何窗体之前，都应该先初始它。且它有一个<code>exec_()</code>方法。这个方法是继承自父类的，功能是进入GUI的事件处理循环。如果没有这句，窗口会一闪而过。继承关系如下：</p><img src="/post/PySide2%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951/QApplication.png" class="" title="继承图。exec_()方法继承自其直接父类"><h1 id="按钮、slot、signal"><a href="#按钮、slot、signal" class="headerlink" title="按钮、slot、signal"></a>按钮、slot、signal</h1><p>控件被操作之后，会发送一个<strong>signal</strong>，可以指定一个函数去处理这个<strong>signal</strong>。这个函数大约就是<strong>slot</strong>了。</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">from PySide2.QtWidgets import QApplication, QMainWindow, QPushButton, QMessageBoxclass MyWindow():    def __init__(self):        self.app &#x3D; QApplication([])        # 初始化窗口        self.window &#x3D; QMainWindow()        # 在window上放置一个button        self.button &#x3D; QPushButton(text&#x3D;&quot;提交&quot;,parent&#x3D;self.window)        self.button.clicked.connect(self.button_handler)        self.window.show()        self.app.exec_()    def button_handler(self):        # 按钮点积信号的处理函数(slot)        QMessageBox.about(            self.window,            &quot;按钮提交反馈&quot;,            &quot;您刚才点击了按钮！&quot;        )if __name__ &#x3D;&#x3D; &#39;__main__&#39;:    MyWindow()    https:&#x2F;&#x2F;doc.qt.io&#x2F;qt-6&#x2F;qabstractbutton.html#signals</code></pre><p>这段代码的执行结果为：</p><img src="/post/PySide2%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951/button.png" class="" title="按钮点击事件、弹出消息框"><p><a href="https://doc.qt.io/qt-6/qabstractbutton.html#signals">这里有</a><code>QAbstractButton</code>的全部<strong>signal</strong>。</p><h1 id="使用Qt-Designer"><a href="#使用Qt-Designer" class="headerlink" title="使用Qt Designer"></a>使用Qt Designer</h1><p>手动调整控件的位置无疑是枯燥的。Qt库提供了一个工具，叫designer，可以用拖拽的方式先调整好GUI各个控件的大体位置。这个软件被安装在了虚拟环境的Scripts目录下：</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">D:\software\Anaconda\envs\tf2\Scripts\pyside2-designer.exe</code></pre><p>用这个软件设计好界面后，将*.ui文件保存，然后在代码中加载它：</p><pre class="line-numbers language-python" data-language="python"><code class="language-python">from PySide2.QtUiTools import QUiLoaderfrom PySide2.QtWidgets import QApplicationclass MyFrame():    def __init__(self):        self.app &#x3D; QApplication([])        # 加载ui配置文件        self.ui &#x3D; QUiLoader().load(&quot;ui&#x2F;postman.ui&quot;)        # 显示窗体        self.ui.show()        self.app.exec_()if __name__ &#x3D;&#x3D; &#39;__main__&#39;:    MyFrame()</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Python第三方库 Python GUI </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>git设置</title>
       <link href="//post/git%E8%AE%BE%E7%BD%AE.html"/>
       <url>//post/git%E8%AE%BE%E7%BD%AE.html</url>
