@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>git设置</title>
+      <link href="//post/git%E8%AE%BE%E7%BD%AE.html"/>
+      <url>//post/git%E8%AE%BE%E7%BD%AE.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="git-clone下载太慢"><a href="#git-clone下载太慢" class="headerlink" title="git clone下载太慢"></a>git clone下载太慢</h1><p>可以配置git 使用socket5 代理 ，如使用SSR（地址为socks5h:&#x2F;&#x2F;127.0.0.1:1080）：</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">git config --global http.proxy &#39;socks5h:&#x2F;&#x2F;127.0.0.1:1080&#39;git config --global https.proxy &#39;socks5h:&#x2F;&#x2F;127.0.0.1:1080&#39;</code></pre><h1 id="git-配置-ssh秘钥："><a href="#git-配置-ssh秘钥：" class="headerlink" title="git 配置 ssh秘钥："></a>git 配置 ssh秘钥：</h1><p>暂无 </p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Git </tag>
+            
+            <tag> 翻墙 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>powershell</title>
+      <link href="//post/powershell.html"/>
+      <url>//post/powershell.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="一行代码执行多条命令"><a href="#一行代码执行多条命令" class="headerlink" title="一行代码执行多条命令"></a>一行代码执行多条命令</h1><p>用<strong>分号</strong>实现。</p><p>如，重启hexo服务器：</p><pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">hexo clean ; hexo g ; hexo s</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Windows </tag>
+            
+            <tag> Shell </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hexo</title>
+      <link href="//post/Hexo.html"/>
+      <url>//post/Hexo.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="记录创建博客时遇到的命令"><a href="#记录创建博客时遇到的命令" class="headerlink" title="记录创建博客时遇到的命令"></a>记录创建博客时遇到的命令</h1><ol><li><p>创建新文章</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hexo n &quot;作品名&quot;</code></pre></li><li></li></ol>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>介绍</title>
+      <link href="//post/%E6%80%BB%E8%BF%B0%E6%96%87%E7%AB%A0.html"/>
+      <url>//post/%E6%80%BB%E8%BF%B0%E6%96%87%E7%AB%A0.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="欢迎来访！祝你每天都有个好心情"><a href="#欢迎来访！祝你每天都有个好心情" class="headerlink" title="欢迎来访！祝你每天都有个好心情~"></a>欢迎来访！祝你每天都有个好心情~</h1>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> misc </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
