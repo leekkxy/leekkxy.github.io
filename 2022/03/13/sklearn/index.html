@@ -5,7 +5,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="sklearn, Lk&#39;s Blog">
-    <meta name="description" content="">
+    <meta name="description" content="3.1 交叉验证交叉验证中，有“几折”就有几次迭代的验证：
+
+
+最直接的实现类是KFold，其随机地将数据划分为n个fold。下面这段代码将数据随机划分为4折，所以迭代了四次。kf.split()方法返回划分后数据下标，第一个参数是训练集的">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -428,9 +431,21 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Python/">
+                                <span class="chip bg-color">Python</span>
+                            </a>
+                        
+                            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                                <span class="chip bg-color">深度学习</span>
+                            </a>
+                        
+                            <a href="/tags/sklearn/">
+                                <span class="chip bg-color">sklearn</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -456,7 +471,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    378
                 </div>
                 
 
@@ -486,7 +501,43 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h2 id="3-1-交叉验证"><a href="#3-1-交叉验证" class="headerlink" title="3.1 交叉验证"></a>3.1 交叉验证</h2><p>交叉验证中，有“几折”就有几次迭代的验证：</p>
+<img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_cv_indices_006.png" class="[class names]" title="[100] [100] " alt="4折交叉验证，图片来自sklearn文档">
+
+<p>最直接的实现类是<code>KFold</code>，其随机地将数据划分为n个fold。下面这段代码将数据随机划分为4折，所以迭代了四次。<code>kf.split()</code>方法返回划分后数据下标，第一个参数是训练集的下标；第二个是验证集的。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span>  np
+<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>model_selection <span class="token keyword">import</span> KFold
+
+X <span class="token operator">=</span> np<span class="token punctuation">.</span>arange<span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token operator">+</span><span class="token number">12</span><span class="token punctuation">)</span>
+kf <span class="token operator">=</span> KFold<span class="token punctuation">(</span>n_splits<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span>train<span class="token punctuation">,</span> test<span class="token punctuation">)</span> <span class="token keyword">in</span> kf<span class="token punctuation">.</span>split<span class="token punctuation">(</span>X<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'</span><span class="token interpolation"><span class="token punctuation">&#123;</span>train<span class="token punctuation">&#125;</span></span><span class="token string">---</span><span class="token interpolation"><span class="token punctuation">&#123;</span>test<span class="token punctuation">&#125;</span></span><span class="token string">'</span></span><span class="token punctuation">)</span>
+<span class="token comment"># [ 3  4  5  6  7  8  9 10 11]---[0 1 2]</span>
+<span class="token comment"># [ 0  1  2  6  7  8  9 10 11]---[3 4 5]</span>
+<span class="token comment"># [ 0  1  2  3  4  5  9 10 11]---[6 7 8]</span>
+<span class="token comment"># [0 1 2 3 4 5 6 7 8]---[ 9 10 11]</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>而<code>StratifiedKFold</code>根据数据集类别的分布划分数据集。其保证每个fold中，各个类别比例和原数据集相同：</p>
+<img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_cv_indices_009.png" class="[class names]" title="[100] [100] " alt="4折分层交叉验证，图片来自sklearn文档">
+
+<p>如：下面这段代码将数据分为4折。原数据两个类别比例为3:1，划分出的每个fold也保持这个比例：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span>  np
+<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>model_selection <span class="token keyword">import</span> KFold<span class="token punctuation">,</span> StratifiedKFold
+
+X <span class="token operator">=</span> np<span class="token punctuation">.</span>arange<span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>
+skf <span class="token operator">=</span> StratifiedKFold<span class="token punctuation">(</span>n_splits<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">)</span>
+y <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">*</span> <span class="token number">15</span> <span class="token operator">+</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token number">5</span>
+<span class="token keyword">for</span> train<span class="token punctuation">,</span>test <span class="token keyword">in</span> skf<span class="token punctuation">.</span>split<span class="token punctuation">(</span>X<span class="token punctuation">,</span>y<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f'</span><span class="token interpolation"><span class="token punctuation">&#123;</span>train<span class="token punctuation">&#125;</span></span><span class="token string">---</span><span class="token interpolation"><span class="token punctuation">&#123;</span>test<span class="token punctuation">&#125;</span></span><span class="token string">'</span></span><span class="token punctuation">)</span>
+
+<span class="token comment"># [ 4  5  6  7  8  9 10 11 12 13 14 16 17 18 19]---[ 0  1  2  3 15]</span>
+<span class="token comment"># [ 0  1  2  3  8  9 10 11 12 13 14 15 17 18 19]---[ 4  5  6  7 16]</span>
+<span class="token comment"># [ 0  1  2  3  4  5  6  7 12 13 14 15 16 18 19]---[ 8  9 10 11 17]</span>
+<span class="token comment"># [ 0  1  2  3  4  5  6  7  8  9 10 11 15 16 17]---[12 13 14 18 19]</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
                 
             </div>
             <hr/>
@@ -549,7 +600,19 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Python/">
+                                    <span class="chip bg-color">Python</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                                    <span class="chip bg-color">深度学习</span>
+                                </a>
+                            
+                                <a href="/tags/sklearn/">
+                                    <span class="chip bg-color">sklearn</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -628,6 +691,22 @@
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                        <span class="chip bg-color">深度学习</span>
+                    </a>
+                    
+                    <a href="/tags/sklearn/">
+                        <span class="chip bg-color">sklearn</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -873,7 +952,7 @@
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">2.7k</span>
+                        class="white-color">3.2k</span>
             
             
             
