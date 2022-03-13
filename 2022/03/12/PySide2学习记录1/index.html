@@ -1,10 +1,10 @@
 <!DOCTYPE HTML>
-<html lang="zh-CN">
+<html lang="en">
 
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="PySide2学习记录1, LK&#39;s Blog">
+    <meta name="keywords" content="PySide2学习记录1, Hexo">
     <meta name="description" content="简单实现：打开一个窗口from PySide2.QtWidgets import QApplication, QMainWindow
 app &amp;#x3D; QApplication([])
 window &amp;#x3D; QMainWindow">
@@ -19,7 +19,7 @@ window &amp;#x3D; QMainWindow">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>PySide2学习记录1 | LK&#39;s Blog</title>
+    <title>PySide2学习记录1 | Hexo</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -46,7 +46,7 @@ window &amp;#x3D; QMainWindow">
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">LK&#39;s Blog</span>
+                    <span class="logo-span">Hexo</span>
                 </a>
             </div>
             
@@ -60,7 +60,7 @@ window &amp;#x3D; QMainWindow">
       
       <i class="fas fa-home" style="zoom: 0.6;"></i>
       
-      <span>首页</span>
+      <span>Index</span>
     </a>
     
   </li>
@@ -71,7 +71,7 @@ window &amp;#x3D; QMainWindow">
       
       <i class="fas fa-tags" style="zoom: 0.6;"></i>
       
-      <span>标签</span>
+      <span>Tags</span>
     </a>
     
   </li>
@@ -82,7 +82,7 @@ window &amp;#x3D; QMainWindow">
       
       <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
       
-      <span>分类</span>
+      <span>Categories</span>
     </a>
     
   </li>
@@ -93,7 +93,7 @@ window &amp;#x3D; QMainWindow">
       
       <i class="fas fa-archive" style="zoom: 0.6;"></i>
       
-      <span>归档</span>
+      <span>Archives</span>
     </a>
     
   </li>
@@ -104,7 +104,7 @@ window &amp;#x3D; QMainWindow">
       
       <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
       
-      <span>关于</span>
+      <span>About</span>
     </a>
     
   </li>
@@ -115,7 +115,7 @@ window &amp;#x3D; QMainWindow">
       
       <i class="fas fa-comments" style="zoom: 0.6;"></i>
       
-      <span>留言板</span>
+      <span>Contact</span>
     </a>
     
   </li>
@@ -126,14 +126,14 @@ window &amp;#x3D; QMainWindow">
       
       <i class="fas fa-address-book" style="zoom: 0.6;"></i>
       
-      <span>友情链接</span>
+      <span>Friends</span>
     </a>
     
   </li>
   
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+      <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
     </a>
   </li>
 </ul>
@@ -145,10 +145,10 @@ window &amp;#x3D; QMainWindow">
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">LK&#39;s Blog</div>
+        <div class="logo-name">Hexo</div>
         <div class="logo-desc">
             
-            技术博客，日常记录
+            Never really desperate, only the lost of the soul.
             
         </div>
     </div>
@@ -161,7 +161,7 @@ window &amp;#x3D; QMainWindow">
 			
 			    <i class="fa-fw fas fa-home"></i>
 			
-			首页
+			Index
 		</a>
           
         </li>
@@ -172,7 +172,7 @@ window &amp;#x3D; QMainWindow">
 			
 			    <i class="fa-fw fas fa-tags"></i>
 			
-			标签
+			Tags
 		</a>
           
         </li>
@@ -183,7 +183,7 @@ window &amp;#x3D; QMainWindow">
 			
 			    <i class="fa-fw fas fa-bookmark"></i>
 			
-			分类
+			Categories
 		</a>
           
         </li>
@@ -194,7 +194,7 @@ window &amp;#x3D; QMainWindow">
 			
 			    <i class="fa-fw fas fa-archive"></i>
 			
-			归档
+			Archives
 		</a>
           
         </li>
@@ -205,7 +205,7 @@ window &amp;#x3D; QMainWindow">
 			
 			    <i class="fa-fw fas fa-user-circle"></i>
 			
-			关于
+			About
 		</a>
           
         </li>
@@ -216,7 +216,7 @@ window &amp;#x3D; QMainWindow">
 			
 			    <i class="fa-fw fas fa-comments"></i>
 			
-			留言板
+			Contact
 		</a>
           
         </li>
@@ -227,7 +227,7 @@ window &amp;#x3D; QMainWindow">
 			
 			    <i class="fa-fw fas fa-address-book"></i>
 			
-			友情链接
+			Friends
 		</a>
           
         </li>
@@ -455,35 +455,35 @@ window &amp;#x3D; QMainWindow">
             <div class="post-info">
                 
                 <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
                     2022-03-12
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
                     2022-03-13
                 </div>
                 
 
                 
                 <div class="info-break-policy">
-                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    450
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    422
                 </div>
                 
 
                 
                 <div class="info-break-policy">
-                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
+                    1 Min
                 </div>
                 
 
                 
                     <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <i class="far fa-eye fa-fw"></i>Read Count:&nbsp;&nbsp;
                         <span id="busuanzi_value_page_pv"></span>
                     </div>
 				
@@ -505,65 +505,65 @@ app &#x3D; QApplication([])
 window &#x3D; QMainWindow()
 window.show()
 app.exec_()
-</code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>上述代码的效果为：</p>
-<img src="/post/PySide2%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951/1.png" class="" title="上述代码执行效果">
+
 
 
 
 <p>其中，<code>app</code>为控整个GUI程序的“管理者”。在初始化任何窗体之前，都应该先初始它。且它有一个<code>exec_()</code>方法。这个方法是继承自父类的，功能是进入GUI的事件处理循环。如果没有这句，窗口会一闪而过。继承关系如下：</p>
-<img src="/post/PySide2%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951/QApplication.png" class="" title="继承图。exec_()方法继承自其直接父类">
+
 
 <h1 id="按钮、slot、signal"><a href="#按钮、slot、signal" class="headerlink" title="按钮、slot、signal"></a>按钮、slot、signal</h1><p>控件被操作之后，会发送一个<strong>signal</strong>，可以指定一个函数去处理这个<strong>signal</strong>。这个函数大约就是<strong>slot</strong>了。</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">from PySide2.QtWidgets import QApplication, QMainWindow, QPushButton, QMessageBox
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> PySide2<span class="token punctuation">.</span>QtWidgets <span class="token keyword">import</span> QApplication<span class="token punctuation">,</span> QMainWindow<span class="token punctuation">,</span> QPushButton<span class="token punctuation">,</span> QMessageBox
 
 
-class MyWindow():
-    def __init__(self):
-        self.app &#x3D; QApplication([])
-        # 初始化窗口
-        self.window &#x3D; QMainWindow()
-        # 在window上放置一个button
-        self.button &#x3D; QPushButton(text&#x3D;&quot;提交&quot;,parent&#x3D;self.window)
-        self.button.clicked.connect(self.button_handler)
-        self.window.show()
-        self.app.exec_()
-    def button_handler(self):
-        # 按钮点积信号的处理函数(slot)
-        QMessageBox.about(
-            self.window,
-            &quot;按钮提交反馈&quot;,
-            &quot;您刚才点击了按钮！&quot;
-        )
-if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
-    MyWindow()
-    https:&#x2F;&#x2F;doc.qt.io&#x2F;qt-6&#x2F;qabstractbutton.html#signals</code></pre>
+<span class="token keyword">class</span> <span class="token class-name">MyWindow</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>app <span class="token operator">=</span> QApplication<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token comment"># 初始化窗口</span>
+        self<span class="token punctuation">.</span>window <span class="token operator">=</span> QMainWindow<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment"># 在window上放置一个button</span>
+        self<span class="token punctuation">.</span>button <span class="token operator">=</span> QPushButton<span class="token punctuation">(</span>text<span class="token operator">=</span><span class="token string">"提交"</span><span class="token punctuation">,</span>parent<span class="token operator">=</span>self<span class="token punctuation">.</span>window<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>button<span class="token punctuation">.</span>clicked<span class="token punctuation">.</span>connect<span class="token punctuation">(</span>self<span class="token punctuation">.</span>button_handler<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>window<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>app<span class="token punctuation">.</span>exec_<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">button_handler</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 按钮点积信号的处理函数(slot)</span>
+        QMessageBox<span class="token punctuation">.</span>about<span class="token punctuation">(</span>
+            self<span class="token punctuation">.</span>window<span class="token punctuation">,</span>
+            <span class="token string">"按钮提交反馈"</span><span class="token punctuation">,</span>
+            <span class="token string">"您刚才点击了按钮！"</span>
+        <span class="token punctuation">)</span>
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    MyWindow<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    https<span class="token punctuation">:</span><span class="token operator">//</span>doc<span class="token punctuation">.</span>qt<span class="token punctuation">.</span>io<span class="token operator">/</span>qt<span class="token operator">-</span><span class="token number">6</span><span class="token operator">/</span>qabstractbutton<span class="token punctuation">.</span>html<span class="token comment">#signals</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这段代码的执行结果为：</p>
-<img src="/post/PySide2%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951/button.png" class="" title="按钮点击事件、弹出消息框">
+
 
 <p><a target="_blank" rel="noopener" href="https://doc.qt.io/qt-6/qabstractbutton.html#signals">这里有</a><code>QAbstractButton</code>的全部<strong>signal</strong>。</p>
 <h1 id="使用Qt-Designer"><a href="#使用Qt-Designer" class="headerlink" title="使用Qt Designer"></a>使用Qt Designer</h1><p>手动调整控件的位置无疑是枯燥的。Qt库提供了一个工具，叫designer，可以用拖拽的方式先调整好GUI各个控件的大体位置。这个软件被安装在了虚拟环境的Scripts目录下：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">D:\software\Anaconda\envs\tf2\Scripts\pyside2-designer.exe</code></pre>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">D:\software\Anaconda\envs\tf2\Scripts\pyside2-designer.exe<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 
 
 <p>用这个软件设计好界面后，将*.ui文件保存，然后在代码中加载它：</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">from PySide2.QtUiTools import QUiLoader
-from PySide2.QtWidgets import QApplication
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> PySide2<span class="token punctuation">.</span>QtUiTools <span class="token keyword">import</span> QUiLoader
+<span class="token keyword">from</span> PySide2<span class="token punctuation">.</span>QtWidgets <span class="token keyword">import</span> QApplication
 
 
-class MyFrame():
-    def __init__(self):
-        self.app &#x3D; QApplication([])
-        # 加载ui配置文件
-        self.ui &#x3D; QUiLoader().load(&quot;ui&#x2F;postman.ui&quot;)
-        # 显示窗体
-        self.ui.show()
-        self.app.exec_()
-if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
-    MyFrame()</code></pre>
+<span class="token keyword">class</span> <span class="token class-name">MyFrame</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>app <span class="token operator">=</span> QApplication<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token comment"># 加载ui配置文件</span>
+        self<span class="token punctuation">.</span>ui <span class="token operator">=</span> QUiLoader<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token string">"ui/postman.ui"</span><span class="token punctuation">)</span>
+        <span class="token comment"># 显示窗体</span>
+        self<span class="token punctuation">.</span>ui<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>app<span class="token punctuation">.</span>exec_<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    MyFrame<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
@@ -579,34 +579,34 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
             <div class="reprint__author">
                 <span class="reprint-meta" style="font-weight: bold;">
                     <i class="fas fa-user">
-                        文章作者:
+                        Author:
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">leekkxy</a>
+                    <a href="/about" rel="external nofollow noreferrer">John Doe</a>
                 </span>
             </div>
             <div class="reprint__type">
                 <span class="reprint-meta" style="font-weight: bold;">
                     <i class="fas fa-link">
-                        文章链接:
+                        Link:
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://leekkxy.github.io/post/PySide2%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951.html">https://leekkxy.github.io/post/PySide2%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951.html</a>
+                    <a href="http://example.com/2022/03/12/PySide2%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951/">http://example.com/2022/03/12/PySide2%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951/</a>
                 </span>
             </div>
             <div class="reprint__notice">
                 <span class="reprint-meta" style="font-weight: bold;">
                     <i class="fas fa-copyright">
-                        版权声明:
+                        Reprint policy:
                     </i>
                 </span>
                 <span class="reprint-info">
-                    本博客所有文章除特別声明外，均采用
+                    All articles in this blog are used except for special statements
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
-                    许可协议。转载请注明来源
-                    <a href="/about" target="_blank">leekkxy</a>
+                    reprint policy. If reproduced, please indicate source
+                    <a href="/about" target="_blank">John Doe</a>
                     !
                 </span>
             </div>
@@ -615,7 +615,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 
     <script async defer>
       document.addEventListener("copy", function (e) {
-        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        let toastHTML = '<span>Copied successfully, please follow the reprint policy of this article</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">more</a>';
         M.toast({html: toastHTML})
       });
 
@@ -690,9 +690,9 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/post/shutil%E6%A8%A1%E5%9D%97.html">
+                <a href="/2022/03/13/shutil%E6%A8%A1%E5%9D%97/">
                     <div class="card-image">
                         
                         
@@ -714,7 +714,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            leekkxy
+                            John Doe
                             
                         </span>
                     </div>
@@ -742,10 +742,10 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/post/git%E8%AE%BE%E7%BD%AE.html">
+                <a href="/2022/03/12/git%E8%AE%BE%E7%BD%AE/">
                     <div class="card-image">
                         
                         
@@ -767,7 +767,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            leekkxy
+                            John Doe
                             
                         </span>
                     </div>
@@ -816,7 +816,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
     </div>
     <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
         <div class="toc-widget card" style="background-color: white;">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;TOC</div>
             <div id="toc-content"></div>
         </div>
     </div>
@@ -978,13 +978,13 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
             
                 <span id="year">2022</span>
             
-            <a href="/about" target="_blank">leekkxy</a>
+            <a href="/about" target="_blank">John Doe</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
             
-                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">847</span>
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;Total Words:&nbsp;<span
+                        class="white-color">968</span>
             
             
             
@@ -992,13 +992,13 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
             
             
                 <span id="busuanzi_container_site_pv">
-                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;Total visits:&nbsp;
                     <span id="busuanzi_value_site_pv" class="white-color"></span>
             </span>
             
             
                 <span id="busuanzi_container_site_uv">
-                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;Total visitors:&nbsp;
                     <span id="busuanzi_value_site_uv" class="white-color"></span>
             </span>
             
@@ -1034,7 +1034,7 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
                         var diffDays = Math.floor((diff / days) - diffYears * 365);
 
                         // 区分是否有年份.
-                        var language = 'zh-CN';
+                        var language = 'en';
                         if (startYear === String(todayYear)) {
                             document.getElementById("year").innerHTML = todayYear;
                             var daysTip = 'This site has been running for ' + diffDays + ' days';
@@ -1105,8 +1105,8 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
 <div id="searchModal" class="modal">
     <div class="modal-content">
         <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;Search</span>
+            <input type="search" id="searchInput" name="s" placeholder="Please enter a search keyword"
                    class="search-input">
         </div>
         <div id="searchResult"></div>

@@ -1,13 +1,15 @@
 <!DOCTYPE HTML>
-<html lang="zh-CN">
+<html lang="en">
 
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="shutil模块, LK&#39;s Blog">
-    <meta name="description" content="shutil.copyfile(src,des)   从src拷贝文件到des。且des目录里不能有未创建的文件夹。关键部分源码：
-   	#....
-with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
+    <meta name="keywords" content="powershell, Hexo">
+    <meta name="description" content="一行代码执行多条命令用分号实现。
+如，重启hexo服务器：
+hexo clean ; hexo g ; hexo s
+
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +21,7 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>shutil模块 | LK&#39;s Blog</title>
+    <title>powershell | Hexo</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -46,7 +48,7 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
                     
                     <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">LK&#39;s Blog</span>
+                    <span class="logo-span">Hexo</span>
                 </a>
             </div>
             
@@ -60,7 +62,7 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
       
       <i class="fas fa-home" style="zoom: 0.6;"></i>
       
-      <span>首页</span>
+      <span>Index</span>
     </a>
     
   </li>
@@ -71,7 +73,7 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
       
       <i class="fas fa-tags" style="zoom: 0.6;"></i>
       
-      <span>标签</span>
+      <span>Tags</span>
     </a>
     
   </li>
@@ -82,7 +84,7 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
       
       <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
       
-      <span>分类</span>
+      <span>Categories</span>
     </a>
     
   </li>
@@ -93,7 +95,7 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
       
       <i class="fas fa-archive" style="zoom: 0.6;"></i>
       
-      <span>归档</span>
+      <span>Archives</span>
     </a>
     
   </li>
@@ -104,7 +106,7 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
       
       <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
       
-      <span>关于</span>
+      <span>About</span>
     </a>
     
   </li>
@@ -115,7 +117,7 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
       
       <i class="fas fa-comments" style="zoom: 0.6;"></i>
       
-      <span>留言板</span>
+      <span>Contact</span>
     </a>
     
   </li>
@@ -126,14 +128,14 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
       
       <i class="fas fa-address-book" style="zoom: 0.6;"></i>
       
-      <span>友情链接</span>
+      <span>Friends</span>
     </a>
     
   </li>
   
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+      <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
     </a>
   </li>
 </ul>
@@ -145,10 +147,10 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
         
         <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
-        <div class="logo-name">LK&#39;s Blog</div>
+        <div class="logo-name">Hexo</div>
         <div class="logo-desc">
             
-            技术博客，日常记录
+            Never really desperate, only the lost of the soul.
             
         </div>
     </div>
@@ -161,7 +163,7 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
 			
 			    <i class="fa-fw fas fa-home"></i>
 			
-			首页
+			Index
 		</a>
           
         </li>
@@ -172,7 +174,7 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
 			
 			    <i class="fa-fw fas fa-tags"></i>
 			
-			标签
+			Tags
 		</a>
           
         </li>
@@ -183,7 +185,7 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
 			
 			    <i class="fa-fw fas fa-bookmark"></i>
 			
-			分类
+			Categories
 		</a>
           
         </li>
@@ -194,7 +196,7 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
 			
 			    <i class="fa-fw fas fa-archive"></i>
 			
-			归档
+			Archives
 		</a>
           
         </li>
@@ -205,7 +207,7 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
 			
 			    <i class="fa-fw fas fa-user-circle"></i>
 			
-			关于
+			About
 		</a>
           
         </li>
@@ -216,7 +218,7 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
 			
 			    <i class="fa-fw fas fa-comments"></i>
 			
-			留言板
+			Contact
 		</a>
           
         </li>
@@ -227,7 +229,7 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
 			
 			    <i class="fa-fw fas fa-address-book"></i>
 			
-			友情链接
+			Friends
 		</a>
           
         </li>
@@ -311,12 +313,12 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">shutil模块</h1>
+                    <h1 class="description center-align post-title">powershell</h1>
                 </div>
             </div>
         </div>
@@ -432,16 +434,12 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Python%E5%BA%93/">
-                                <span class="chip bg-color">Python库</span>
+                            <a href="/tags/Windows/">
+                                <span class="chip bg-color">Windows</span>
                             </a>
                         
-                            <a href="/tags/Python/">
-                                <span class="chip bg-color">Python</span>
-                            </a>
-                        
-                            <a href="/tags/%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86/">
-                                <span class="chip bg-color">文件处理</span>
+                            <a href="/tags/Shell/">
+                                <span class="chip bg-color">Shell</span>
                             </a>
                         
                     </div>
@@ -455,35 +453,35 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
             <div class="post-info">
                 
                 <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-03-13
+                    <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
+                    2022-03-12
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-13
+                    <i class="far fa-calendar-check fa-fw"></i>Update Date:&nbsp;&nbsp;
+                    2022-03-12
                 </div>
                 
 
                 
                 <div class="info-break-policy">
-                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    167
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
-                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
+                    1 Min
                 </div>
                 
 
                 
                     <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <i class="far fa-eye fa-fw"></i>Read Count:&nbsp;&nbsp;
                         <span id="busuanzi_value_page_pv"></span>
                     </div>
 				
@@ -500,14 +498,10 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="shutil-copyfile-src-des"><a href="#shutil-copyfile-src-des" class="headerlink" title="shutil.copyfile(src,des)"></a><code>shutil.copyfile(src,des)</code></h2><p>   从<code>src</code>拷贝文件到<code>des</code>。且<code>des</code>目录里不能有未创建的文件夹。关键部分源码：</p>
-   <pre class="line-numbers language-python" data-language="python"><code class="language-python">	#....
-with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
-   #....</code></pre>
+                <h1 id="一行代码执行多条命令"><a href="#一行代码执行多条命令" class="headerlink" title="一行代码执行多条命令"></a>一行代码执行多条命令</h1><p>用<strong>分号</strong>实现。</p>
+<p>如，重启hexo服务器：</p>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">hexo clean <span class="token punctuation">;</span> hexo g <span class="token punctuation">;</span> hexo s<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>   可以看到，这函数调用<code>open()</code>方法，打开了两个文件，完成复制。</p>
-<h2 id="shutil-copytree-src-dst-dirs-exist-ok-False"><a href="#shutil-copytree-src-dst-dirs-exist-ok-False" class="headerlink" title="shutil.copytree(src, dst,dirs_exist_ok=False)"></a><code>shutil.copytree(src, dst,dirs_exist_ok=False)</code></h2><p>   递归式拷贝<code>src</code>文件树到<code>dst</code>中。若<code>dirs_exist_ok=True</code>，那么如果<code>dst</code>中已经存在某些文件，则会跳过复制而不报错。反之亦然。</p>
-<h2 id="shutil-make-archive-quot-archive-quot-quot-zip-quot-quot-quot"><a href="#shutil-make-archive-quot-archive-quot-quot-zip-quot-quot-quot" class="headerlink" title="shutil.make_archive(&quot;archive&quot;,&quot;zip&quot;,&quot;.&quot;)"></a><code>shutil.make_archive(&quot;archive&quot;,&quot;zip&quot;,&quot;.&quot;)</code></h2><p>   这里直接上例子了。上面这句作用是将当前目录下文件打包成压缩包，并返回压缩包的全路径。</p>
 
                 
             </div>
@@ -520,34 +514,34 @@ with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
             <div class="reprint__author">
                 <span class="reprint-meta" style="font-weight: bold;">
                     <i class="fas fa-user">
-                        文章作者:
+                        Author:
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">leekkxy</a>
+                    <a href="/about" rel="external nofollow noreferrer">John Doe</a>
                 </span>
             </div>
             <div class="reprint__type">
                 <span class="reprint-meta" style="font-weight: bold;">
                     <i class="fas fa-link">
-                        文章链接:
+                        Link:
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://leekkxy.github.io/post/shutil%E6%A8%A1%E5%9D%97.html">https://leekkxy.github.io/post/shutil%E6%A8%A1%E5%9D%97.html</a>
+                    <a href="http://example.com/2022/03/12/powershell/">http://example.com/2022/03/12/powershell/</a>
                 </span>
             </div>
             <div class="reprint__notice">
                 <span class="reprint-meta" style="font-weight: bold;">
                     <i class="fas fa-copyright">
-                        版权声明:
+                        Reprint policy:
                     </i>
                 </span>
                 <span class="reprint-info">
-                    本博客所有文章除特別声明外，均采用
+                    All articles in this blog are used except for special statements
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
-                    许可协议。转载请注明来源
-                    <a href="/about" target="_blank">leekkxy</a>
+                    reprint policy. If reproduced, please indicate source
+                    <a href="/about" target="_blank">John Doe</a>
                     !
                 </span>
             </div>
@@ -556,7 +550,7 @@ with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
 
     <script async defer>
       document.addEventListener("copy", function (e) {
-        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        let toastHTML = '<span>Copied successfully, please follow the reprint policy of this article</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">more</a>';
         M.toast({html: toastHTML})
       });
 
@@ -572,16 +566,12 @@ with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Python%E5%BA%93/">
-                                    <span class="chip bg-color">Python库</span>
+                                <a href="/tags/Windows/">
+                                    <span class="chip bg-color">Windows</span>
                                 </a>
                             
-                                <a href="/tags/Python/">
-                                    <span class="chip bg-color">Python</span>
-                                </a>
-                            
-                                <a href="/tags/%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86/">
-                                    <span class="chip bg-color">文件处理</span>
+                                <a href="/tags/Shell/">
+                                    <span class="chip bg-color">Shell</span>
                                 </a>
                             
                         </div>
@@ -629,18 +619,17 @@ with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/post/shutil%E6%A8%A1%E5%9D%97.html">
+                <a href="/2022/03/12/git%E8%AE%BE%E7%BD%AE/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="shutil模块">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="git设置">
                         
-                        <span class="card-title">shutil模块</span>
+                        <span class="card-title">git设置</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -650,31 +639,26 @@ with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-13
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-12
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            leekkxy
+                            John Doe
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Python%E5%BA%93/">
-                        <span class="chip bg-color">Python库</span>
+                    <a href="/tags/Git/">
+                        <span class="chip bg-color">Git</span>
                     </a>
                     
-                    <a href="/tags/Python/">
-                        <span class="chip bg-color">Python</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86/">
-                        <span class="chip bg-color">文件处理</span>
+                    <a href="/tags/%E7%BF%BB%E5%A2%99/">
+                        <span class="chip bg-color">翻墙</span>
                     </a>
                     
                 </div>
@@ -685,16 +669,16 @@ with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/post/PySide2%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951.html">
+                <a href="/2022/03/12/Hexo/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="PySide2学习记录1">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Hexo">
                         
-                        <span class="card-title">PySide2学习记录1</span>
+                        <span class="card-title">Hexo</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -710,7 +694,7 @@ with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            leekkxy
+                            John Doe
                             
                         </span>
                     </div>
@@ -718,16 +702,8 @@ with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Python%E5%BA%93/">
-                        <span class="chip bg-color">Python库</span>
-                    </a>
-                    
-                    <a href="/tags/Python/">
-                        <span class="chip bg-color">Python</span>
-                    </a>
-                    
-                    <a href="/tags/GUI/">
-                        <span class="chip bg-color">GUI</span>
+                    <a href="/tags/Hexo/">
+                        <span class="chip bg-color">Hexo</span>
                     </a>
                     
                 </div>
@@ -763,7 +739,7 @@ with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
     </div>
     <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
         <div class="toc-widget card" style="background-color: white;">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;TOC</div>
             <div id="toc-content"></div>
         </div>
     </div>
@@ -925,13 +901,13 @@ with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
             
                 <span id="year">2022</span>
             
-            <a href="/about" target="_blank">leekkxy</a>
+            <a href="/about" target="_blank">John Doe</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
             
-                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">847</span>
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;Total Words:&nbsp;<span
+                        class="white-color">968</span>
             
             
             
@@ -939,13 +915,13 @@ with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
             
             
                 <span id="busuanzi_container_site_pv">
-                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;Total visits:&nbsp;
                     <span id="busuanzi_value_site_pv" class="white-color"></span>
             </span>
             
             
                 <span id="busuanzi_container_site_uv">
-                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;Total visitors:&nbsp;
                     <span id="busuanzi_value_site_uv" class="white-color"></span>
             </span>
             
@@ -981,7 +957,7 @@ with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
                         var diffDays = Math.floor((diff / days) - diffYears * 365);
 
                         // 区分是否有年份.
-                        var language = 'zh-CN';
+                        var language = 'en';
                         if (startYear === String(todayYear)) {
                             document.getElementById("year").innerHTML = todayYear;
                             var daysTip = 'This site has been running for ' + diffDays + ' days';
@@ -1052,8 +1028,8 @@ with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
 <div id="searchModal" class="modal">
     <div class="modal-content">
         <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;Search</span>
+            <input type="search" id="searchInput" name="s" placeholder="Please enter a search keyword"
                    class="search-input">
         </div>
         <div id="searchResult"></div>
