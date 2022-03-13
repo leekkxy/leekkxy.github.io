@@ -5,11 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="shutil模块, LK&#39;s Blog">
-    <meta name="description" content="
-shutil.copyfile(src,des)
-从src拷贝文件到des。且des目录里不能有未创建的文件夹。关键部分源码：
-	#....
-with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(dst, ">
+    <meta name="description" content="shutil.copyfile(src,des)   从src拷贝文件到des。且des目录里不能有未创建的文件夹。关键部分源码：
+   	#....
+with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(d">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -502,23 +500,14 @@ with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(dst, ">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <ol>
-<li><p><code>shutil.copyfile(src,des)</code></p>
-<p>从<code>src</code>拷贝文件到<code>des</code>。且<code>des</code>目录里不能有未创建的文件夹。关键部分源码：</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">	#....
+                <h2 id="shutil-copyfile-src-des"><a href="#shutil-copyfile-src-des" class="headerlink" title="shutil.copyfile(src,des)"></a><code>shutil.copyfile(src,des)</code></h2><p>   从<code>src</code>拷贝文件到<code>des</code>。且<code>des</code>目录里不能有未创建的文件夹。关键部分源码：</p>
+   <pre class="line-numbers language-python" data-language="python"><code class="language-python">	#....
 with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
    #....</code></pre>
 
-<p>可以看到，这函数调用<code>open()</code>方法，打开了两个文件，完成复制。</p>
-</li>
-<li><p><code>shutil.copytree(src, dst,dirs_exist_ok=False)</code></p>
-<p>递归式拷贝<code>src</code>文件树到<code>dst</code>中。若<code>dirs_exist_ok=True</code>，那么如果<code>dst</code>中已经存在某些文件，则会跳过复制而不报错。反之亦然。</p>
-</li>
-<li><p><code>shutil.make_archive(&quot;archive&quot;,&quot;zip&quot;,&quot;.&quot;)</code></p>
-<p>这里直接上例子了。上面这句作用是将当前目录下文件打包成压缩包，并返回压缩包的全路径。</p>
-</li>
-<li></li>
-</ol>
+<p>   可以看到，这函数调用<code>open()</code>方法，打开了两个文件，完成复制。</p>
+<h2 id="shutil-copytree-src-dst-dirs-exist-ok-False"><a href="#shutil-copytree-src-dst-dirs-exist-ok-False" class="headerlink" title="shutil.copytree(src, dst,dirs_exist_ok=False)"></a><code>shutil.copytree(src, dst,dirs_exist_ok=False)</code></h2><p>   递归式拷贝<code>src</code>文件树到<code>dst</code>中。若<code>dirs_exist_ok=True</code>，那么如果<code>dst</code>中已经存在某些文件，则会跳过复制而不报错。反之亦然。</p>
+<h2 id="shutil-make-archive-quot-archive-quot-quot-zip-quot-quot-quot"><a href="#shutil-make-archive-quot-archive-quot-quot-zip-quot-quot-quot" class="headerlink" title="shutil.make_archive(&quot;archive&quot;,&quot;zip&quot;,&quot;.&quot;)"></a><code>shutil.make_archive(&quot;archive&quot;,&quot;zip&quot;,&quot;.&quot;)</code></h2><p>   这里直接上例子了。上面这句作用是将当前目录下文件打包成压缩包，并返回压缩包的全路径。</p>
 
                 
             </div>
@@ -942,7 +931,7 @@ with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">766</span>
+                        class="white-color">847</span>
             
             
             
