@@ -4,8 +4,13 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="介绍, Lk&#39;s Blog">
-    <meta name="description" content="欢迎来访！祝你每天都有个好心情~">
+    <meta name="keywords" content="pytorch, Lk&#39;s Blog">
+    <meta name="description" content="1. bmm是定义在batch上的矩阵乘法。在“MOCO”论文中，计算对比损失用到了此方法：
+
+
+上面的方法将N,C的矩阵reshape成为N,1,C的张量，然后使用bmm方法计算点积。
+三维矩阵如下面示意：
+其中每个蓝色框代表一个二维矩阵">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +22,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>介绍 | Lk&#39;s Blog</title>
+    <title>pytorch | Lk&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -309,12 +314,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">介绍</h1>
+                    <h1 class="description center-align post-title">pytorch</h1>
                 </div>
             </div>
         </div>
@@ -430,8 +435,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/misc/">
-                                <span class="chip bg-color">misc</span>
+                            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                                <span class="chip bg-color">深度学习</span>
                             </a>
                         
                     </div>
@@ -446,28 +451,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-03-12
+                    2022-03-13
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-12
+                    2022-03-13
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    14
+                    635
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -490,7 +495,67 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="欢迎来访！祝你每天都有个好心情"><a href="#欢迎来访！祝你每天都有个好心情" class="headerlink" title="欢迎来访！祝你每天都有个好心情~"></a>欢迎来访！祝你每天都有个好心情~</h1>
+                <h2 id="1-bmm"><a href="#1-bmm" class="headerlink" title="1. bmm"></a>1. bmm</h2><p>是定义在batch上的矩阵乘法。在“MOCO”论文中，计算对比损失用到了此方法：</p>
+<img src="/2022/03/13/pytorch/%E8%AE%A1%E7%AE%97%E5%AF%B9%E6%AF%94%E6%8D%9F%E5%A4%B1.png" class="" title="计算对比损失">
+
+<p>上面的方法将<code>N,C</code>的矩阵reshape成为<code>N,1,C</code>的张量，然后使用<code>bmm</code>方法计算点积。</p>
+<p>三维矩阵如下面示意：</p>
+<p>其中每个<strong>蓝色</strong>框代表一个二维矩阵，一个<strong>绿色</strong>框代表batch中的一个数据。<code>bmm</code>方法执行时，先将对应的batch<strong>对齐</strong>，然后再进行batch-wise的<strong>二维矩阵乘法</strong>。下面左边这个矩阵是<code>3,2,4</code>的，而Moco中的是<code>N,1,-1</code>的。</p>
+<img src="/2022/03/13/pytorch/%E4%B8%89%E7%BB%B4Tensor.png" class="" title="三维Tensor">
+
+<h2 id="2-clip-grad-norm"><a href="#2-clip-grad-norm" class="headerlink" title="2.clip_grad_norm_()"></a>2.<code>clip_grad_norm_()</code></h2><p>作用：归一化参数列表中所有的Tensor的梯度，使其梯度的模为给定的最大值。且返回原梯度的模。</p>
+<p>比如，下面这段代码将<code>x</code>梯度的<code>1范数</code>设置为1，这会使得<code>x</code>的所有梯度之和为1。同样地，这段代码返回原梯度的模。下面例子中返回90，因为<br>$$<br>2+4+6+…+18&#x3D;90<br>$$</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">nn<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>clip_grad_norm_<span class="token punctuation">(</span>parameters<span class="token operator">=</span> <span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">,</span>max_norm<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>norm_type<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>完整代码：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torch
+<span class="token keyword">import</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">as</span> nn
+<span class="token keyword">from</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">import</span> Parameter
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    x <span class="token operator">=</span> Parameter<span class="token punctuation">(</span>data<span class="token operator">=</span>torch<span class="token punctuation">.</span>arange<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span>dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span><span class="token builtin">float</span><span class="token punctuation">)</span><span class="token punctuation">.</span>view<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    y <span class="token operator">=</span> torch<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>x <span class="token operator">**</span> <span class="token number">2</span><span class="token punctuation">)</span>
+    y<span class="token punctuation">.</span>backward<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    nn<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>clip_grad_norm_<span class="token punctuation">(</span>parameters<span class="token operator">=</span> <span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">,</span>max_norm<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>norm_type<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>torch<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>grad<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>grad<span class="token punctuation">)</span>
+<span class="token comment"># tensor(1.)</span>
+<span class="token comment"># tensor([[0.0000],</span>
+<span class="token comment">#         [0.0222],</span>
+<span class="token comment">#         [0.0444],</span>
+<span class="token comment">#         [0.0667],</span>
+<span class="token comment">#         [0.0889],</span>
+<span class="token comment">#         [0.1111],</span>
+<span class="token comment">#         [0.1333],</span>
+<span class="token comment">#         [0.1556],</span>
+<span class="token comment">#         [0.1778],</span>
+<span class="token comment">#         [0.2000]])</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="3-保存和加载模型"><a href="#3-保存和加载模型" class="headerlink" title="3.保存和加载模型"></a>3.保存和加载模型</h2><p><a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/notes/serialization.html#saving-loading-tensors">文档链接</a></p>
+<h3 id="3-1保存张量"><a href="#3-1保存张量" class="headerlink" title="3.1保存张量"></a>3.1保存张量</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">t <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1.</span><span class="token punctuation">,</span> <span class="token number">2.</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span>t<span class="token punctuation">,</span> <span class="token string">'tensor.pt'</span><span class="token punctuation">)</span>
+torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token string">'tensor.pt'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>文档中说，保存的文件最好以’.pt’或者’.pth’为后缀名。</p>
+<h3 id="3-2保存字典"><a href="#3-2保存字典" class="headerlink" title="3.2保存字典"></a>3.2保存字典</h3><p>因为这利用了python的pickle模块做持久化，因此字典、列表等数据结构也可以持久化。</p>
+<h3 id="3-3保存模型"><a href="#3-3保存模型" class="headerlink" title="3.3保存模型"></a>3.3保存模型</h3><p>保存和加载模型时，模型只和<code>state_dict</code>交互。剩下的交给<code>torch.save</code>。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">bn <span class="token operator">=</span> torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>BatchNorm1d<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> track_running_stats<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+torch<span class="token punctuation">.</span>save<span class="token punctuation">(</span>bn<span class="token punctuation">.</span>state_dict<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'bn.pt'</span><span class="token punctuation">)</span>
+bn_state_dict <span class="token operator">=</span> torch<span class="token punctuation">.</span>load<span class="token punctuation">(</span><span class="token string">'bn.pt'</span><span class="token punctuation">)</span>
+new_bn <span class="token operator">=</span> torch<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>BatchNorm1d<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> track_running_stats<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+new_bn<span class="token punctuation">.</span>load_state_dict<span class="token punctuation">(</span>bn_state_dict<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>上面这种方式需要事先创建好模型，然后再加载文件。能不能直接从磁盘上加载出整个模型呢？当然是能的。但是<a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/saving_loading_models.html#save-load-entire-model">文档</a>中说“这么做可能使程序因为各种原因出bug”，因为pickle模块并不会保存保存类的信息。</p>
+<h2 id="4-张量的一些方法"><a href="#4-张量的一些方法" class="headerlink" title="4. 张量的一些方法"></a>4. 张量的一些方法</h2><h3 id="4-1-tolist"><a href="#4-1-tolist" class="headerlink" title="4.1 tolist()"></a>4.1 tolist()</h3><p>作用：返回由张量数据组成的嵌套列表。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">a <span class="token operator">=</span> torch<span class="token punctuation">.</span>arange<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span>tolist<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># [0, 1, 2]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="4-2-argmax"><a href="#4-2-argmax" class="headerlink" title="4.2 argmax()"></a>4.2 argmax()</h3><p><a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/generated/torch.argmax.html?highlight=argmax#torch.argmax">文档</a>中是这么描述的：</p>
+<p> Returns the indices of the maximum values of a tensor <strong>across</strong> a dimension. </p>
+<p>沿着某个维度，返回其最大值的下标。</p>
+
                 
             </div>
             <hr/>
@@ -516,7 +581,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2022/03/12/%E6%80%BB%E8%BF%B0%E6%96%87%E7%AB%A0/">http://example.com/2022/03/12/%E6%80%BB%E8%BF%B0%E6%96%87%E7%AB%A0/</a>
+                    <a href="http://example.com/2022/03/13/pytorch/">http://example.com/2022/03/13/pytorch/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -554,8 +619,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/misc/">
-                                    <span class="chip bg-color">misc</span>
+                                <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                                    <span class="chip bg-color">深度学习</span>
                                 </a>
                             
                         </div>
@@ -607,13 +672,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/03/12/Hexo/">
+                <a href="/2022/03/13/sklearn/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Hexo">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="sklearn">
                         
-                        <span class="card-title">Hexo</span>
+                        <span class="card-title">sklearn</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -624,7 +689,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-12
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-13
                         </span>
                         <span class="publish-author">
                             
@@ -635,30 +700,22 @@
                     </div>
                 </div>
                 
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Hexo/">
-                        <span class="chip bg-color">Hexo</span>
-                    </a>
-                    
-                </div>
-                
             </div>
         </div>
         
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/03/12/%E6%80%BB%E8%BF%B0%E6%96%87%E7%AB%A0/">
+                <a href="/2022/03/13/%E9%81%87%E5%88%B0%E7%9A%84%E9%94%99%E8%AF%AF/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="介绍">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="遇到的错误">
                         
-                        <span class="card-title">介绍</span>
+                        <span class="card-title">遇到的错误</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -669,7 +726,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-12
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-13
                             </span>
                         <span class="publish-author">
                             
@@ -679,12 +736,19 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/misc/">
-                        <span class="chip bg-color">misc</span>
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
+                    </a>
+                    
+                    <a href="/tags/Windows/">
+                        <span class="chip bg-color">Windows</span>
+                    </a>
+                    
+                    <a href="/tags/bug/">
+                        <span class="chip bg-color">bug</span>
                     </a>
                     
                 </div>
@@ -815,6 +879,13 @@
 
 </main>
 
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
 
 
 
