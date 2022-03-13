@@ -4,12 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="powershell, LK&#39;s Blog">
-    <meta name="description" content="一行代码执行多条命令用分号实现。
-如，重启hexo服务器：
-hexo clean ; hexo g ; hexo s
-
-">
+    <meta name="keywords" content="shutil模块, LK&#39;s Blog">
+    <meta name="description" content="
+shutil.copyfile(src,des)
+从src拷贝文件到des。且des目录里不能有未创建的文件夹。关键部分源码：
+	#....
+with open(src, &amp;#39;rb&amp;#39;) as fsrc, open(dst, ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -21,7 +21,7 @@ hexo clean ; hexo g ; hexo s
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>powershell | LK&#39;s Blog</title>
+    <title>shutil模块 | LK&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -313,12 +313,12 @@ hexo clean ; hexo g ; hexo s
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">powershell</h1>
+                    <h1 class="description center-align post-title">shutil模块</h1>
                 </div>
             </div>
         </div>
@@ -434,12 +434,16 @@ hexo clean ; hexo g ; hexo s
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Windows/">
-                                <span class="chip bg-color">Windows</span>
+                            <a href="/tags/Python%E5%BA%93/">
+                                <span class="chip bg-color">Python库</span>
                             </a>
                         
-                            <a href="/tags/Shell/">
-                                <span class="chip bg-color">Shell</span>
+                            <a href="/tags/Python/">
+                                <span class="chip bg-color">Python</span>
+                            </a>
+                        
+                            <a href="/tags/%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86/">
+                                <span class="chip bg-color">文件处理</span>
                             </a>
                         
                     </div>
@@ -454,21 +458,21 @@ hexo clean ; hexo g ; hexo s
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-03-12
+                    2022-03-13
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-12
+                    2022-03-13
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    28
+                    167
                 </div>
                 
 
@@ -498,10 +502,23 @@ hexo clean ; hexo g ; hexo s
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="一行代码执行多条命令"><a href="#一行代码执行多条命令" class="headerlink" title="一行代码执行多条命令"></a>一行代码执行多条命令</h1><p>用<strong>分号</strong>实现。</p>
-<p>如，重启hexo服务器：</p>
-<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">hexo clean ; hexo g ; hexo s</code></pre>
+                <ol>
+<li><p><code>shutil.copyfile(src,des)</code></p>
+<p>从<code>src</code>拷贝文件到<code>des</code>。且<code>des</code>目录里不能有未创建的文件夹。关键部分源码：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">	#....
+with open(src, &#39;rb&#39;) as fsrc, open(dst, &#39;wb&#39;) as fdst:
+   #....</code></pre>
 
+<p>可以看到，这函数调用<code>open()</code>方法，打开了两个文件，完成复制。</p>
+</li>
+<li><p><code>shutil.copytree(src, dst,dirs_exist_ok=False)</code></p>
+<p>递归式拷贝<code>src</code>文件树到<code>dst</code>中。若<code>dirs_exist_ok=True</code>，那么如果<code>dst</code>中已经存在某些文件，则会跳过复制而不报错。反之亦然。</p>
+</li>
+<li><p><code>shutil.make_archive(&quot;archive&quot;,&quot;zip&quot;,&quot;.&quot;)</code></p>
+<p>这里直接上例子了。上面这句作用是将当前目录下文件打包成压缩包，并返回压缩包的全路径。</p>
+</li>
+<li></li>
+</ol>
 
                 
             </div>
@@ -528,7 +545,7 @@ hexo clean ; hexo g ; hexo s
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://leekkxy.github.io/post/powershell.html">https://leekkxy.github.io/post/powershell.html</a>
+                    <a href="https://leekkxy.github.io/post/shutil%E6%A8%A1%E5%9D%97.html">https://leekkxy.github.io/post/shutil%E6%A8%A1%E5%9D%97.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -566,12 +583,16 @@ hexo clean ; hexo g ; hexo s
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Windows/">
-                                    <span class="chip bg-color">Windows</span>
+                                <a href="/tags/Python%E5%BA%93/">
+                                    <span class="chip bg-color">Python库</span>
                                 </a>
                             
-                                <a href="/tags/Shell/">
-                                    <span class="chip bg-color">Shell</span>
+                                <a href="/tags/Python/">
+                                    <span class="chip bg-color">Python</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86/">
+                                    <span class="chip bg-color">文件处理</span>
                                 </a>
                             
                         </div>
@@ -619,17 +640,18 @@ hexo clean ; hexo g ; hexo s
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/post/git%E8%AE%BE%E7%BD%AE.html">
+                <a href="/post/shutil%E6%A8%A1%E5%9D%97.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="git设置">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="shutil模块">
                         
-                        <span class="card-title">git设置</span>
+                        <span class="card-title">shutil模块</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -639,9 +661,9 @@ hexo clean ; hexo g ; hexo s
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-13
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -650,15 +672,20 @@ hexo clean ; hexo g ; hexo s
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Git/">
-                        <span class="chip bg-color">Git</span>
+                    <a href="/tags/Python%E5%BA%93/">
+                        <span class="chip bg-color">Python库</span>
                     </a>
                     
-                    <a href="/tags/%E7%BF%BB%E5%A2%99/">
-                        <span class="chip bg-color">翻墙</span>
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86/">
+                        <span class="chip bg-color">文件处理</span>
                     </a>
                     
                 </div>
@@ -672,13 +699,13 @@ hexo clean ; hexo g ; hexo s
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/post/Hexo.html">
+                <a href="/post/PySide2%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Hexo">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="PySide2学习记录1">
                         
-                        <span class="card-title">Hexo</span>
+                        <span class="card-title">PySide2学习记录1</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -702,8 +729,16 @@ hexo clean ; hexo g ; hexo s
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Hexo/">
-                        <span class="chip bg-color">Hexo</span>
+                    <a href="/tags/Python%E5%BA%93/">
+                        <span class="chip bg-color">Python库</span>
+                    </a>
+                    
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
+                    </a>
+                    
+                    <a href="/tags/GUI/">
+                        <span class="chip bg-color">GUI</span>
                     </a>
                     
                 </div>
