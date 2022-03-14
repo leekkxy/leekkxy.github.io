@@ -445,10 +445,6 @@ Usage: hexo &amp;lt;command">
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Python/">
-                                <span class="chip bg-color">Python</span>
-                            </a>
-                        
                             <a href="/tags/Windows/">
                                 <span class="chip bg-color">Windows</span>
                             </a>
@@ -476,21 +472,21 @@ Usage: hexo &amp;lt;command">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-13
+                    2022-03-14
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    131
+                    612
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -534,6 +530,88 @@ Global Options:
   --silent  Hide output on console<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>搜了下，发现是因为命令中有<strong>空格</strong>。所以想在<code>python</code>中执行<code>cmd</code> 命令，还真不容易啊。</p>
+<h2 id="2-dgl随机游走"><a href="#2-dgl随机游走" class="headerlink" title="2.dgl随机游走"></a>2.dgl随机游走</h2><p>GCC: Graph Contrastive Coding for Graph Neural Network Pre-Training 这篇论文中，用到了“重启随机游走算法”。算法内容是：以一个节点为起点，在图中随机游走。每一步都有一定的概率重新<strong>回到</strong>起点。</p>
+<p>但是DGL库中的实现，是以一定的概率<strong>终止</strong>此次游走。如果这个概率很大，那么游走出来的子图几乎都只有一个节点：因为刚开始就直接终止游走了。</p>
+<p>下面是实验：分别以0.8的重启概率和0.0的重启概率，随机游走”COLLAB”数据集。直方图是游走出的1000个子图的节点个数分布图。</p>
+<img src="/2022/03/13/%E9%81%87%E5%88%B0%E7%9A%84%E9%94%99%E8%AF%AF/%E9%9A%8F%E6%9C%BA%E6%B8%B8%E8%B5%B0%E5%AD%90%E5%9B%BE%E8%8A%82%E7%82%B9%E4%B8%AA%E6%95%B0%E5%88%86%E5%B8%83%E7%9B%B4%E6%96%B9%E5%9B%BE.png" class="" title="随机游走子图节点个数分布直方图">
+<p>从图中可以看到，若重启概率为0.8，则80%的子图大小为1，也即是根本就不游走。如果重启概率设置为0，则子图大小正常，都是11（设置的跳数为10，加上起点，正好11）。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> dgl
+<span class="token keyword">from</span> dgl<span class="token punctuation">.</span>data <span class="token keyword">import</span> TUDataset
+<span class="token keyword">from</span> dgl<span class="token punctuation">.</span>sampling <span class="token keyword">import</span> random_walk<span class="token punctuation">,</span> pack_traces
+<span class="token keyword">from</span> torch<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>data <span class="token keyword">import</span> Dataset
+<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
+
+<span class="token keyword">class</span> <span class="token class-name">RwrGraphDataset</span><span class="token punctuation">(</span>Dataset<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>
+            self<span class="token punctuation">,</span>
+            dataset<span class="token operator">=</span><span class="token string">"COLLAB"</span><span class="token punctuation">,</span>
+            rw_hops<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">,</span>
+            restart_prob<span class="token operator">=</span><span class="token number">0.8</span>
+    <span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        <span class="token builtin">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>data_folder <span class="token operator">=</span> <span class="token string">r"G:\Project\Python\step-by-step-gcc\dgl_learning\data"</span>
+        dataset <span class="token operator">=</span> TUDataset<span class="token punctuation">(</span>
+            name<span class="token operator">=</span>dataset<span class="token punctuation">,</span>
+            raw_dir<span class="token operator">=</span>self<span class="token punctuation">.</span>data_folder
+        <span class="token punctuation">)</span>
+        graphs <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token keyword">for</span> g <span class="token keyword">in</span> dataset<span class="token punctuation">:</span>
+            graphs<span class="token punctuation">.</span>append<span class="token punctuation">(</span>g<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>graph <span class="token operator">=</span> dgl<span class="token punctuation">.</span>batch<span class="token punctuation">(</span>graphs<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>rw_hops <span class="token operator">=</span> rw_hops
+        self<span class="token punctuation">.</span>length <span class="token operator">=</span> self<span class="token punctuation">.</span>graph<span class="token punctuation">.</span>number_of_nodes<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>restart_prob <span class="token operator">=</span> restart_prob
+
+    <span class="token keyword">def</span> <span class="token function">__len__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>length
+
+    <span class="token keyword">def</span> <span class="token function">__getitem__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        trace <span class="token operator">=</span> random_walk<span class="token punctuation">(</span>
+            self<span class="token punctuation">.</span>graph<span class="token punctuation">,</span>
+            nodes<span class="token operator">=</span><span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">,</span>
+            length<span class="token operator">=</span>self<span class="token punctuation">.</span>rw_hops<span class="token punctuation">,</span>
+            restart_prob<span class="token operator">=</span>self<span class="token punctuation">.</span>restart_prob
+        <span class="token punctuation">)</span>
+        trace <span class="token operator">=</span> pack_traces<span class="token punctuation">(</span><span class="token operator">*</span>trace<span class="token punctuation">)</span>
+        trace <span class="token operator">=</span> trace<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+        <span class="token comment"># print(trace)</span>
+        <span class="token keyword">return</span> dgl<span class="token punctuation">.</span>node_subgraph<span class="token punctuation">(</span>self<span class="token punctuation">.</span>graph<span class="token punctuation">,</span> trace<span class="token punctuation">.</span>squeeze<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    dataset <span class="token operator">=</span> RwrGraphDataset<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    sub_graphs_8 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    N <span class="token operator">=</span> <span class="token number">1000</span>
+    <span class="token keyword">for</span> idx<span class="token punctuation">,</span> d <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>dataset<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> idx <span class="token operator">>=</span> N<span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+        sub_graphs_8<span class="token punctuation">.</span>append<span class="token punctuation">(</span>d<span class="token punctuation">.</span>number_of_nodes<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    dataset<span class="token punctuation">.</span>restart_prob <span class="token operator">=</span> <span class="token number">0</span>
+    sub_graphs_0 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> idx<span class="token punctuation">,</span> d <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>dataset<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> idx <span class="token operator">>=</span> N<span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+        sub_graphs_0<span class="token punctuation">.</span>append<span class="token punctuation">(</span>d<span class="token punctuation">.</span>number_of_nodes<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>sub_graphs_0<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>sub_graphs_8<span class="token punctuation">)</span>
+
+    fig<span class="token punctuation">,</span>axs <span class="token operator">=</span> plt<span class="token punctuation">.</span>subplots<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>
+    axs<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>hist<span class="token punctuation">(</span>sub_graphs_0<span class="token punctuation">)</span>
+    axs<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>set_title<span class="token punctuation">(</span><span class="token string">"restart_prob = 0"</span><span class="token punctuation">)</span>
+
+    axs<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>hist<span class="token punctuation">(</span>sub_graphs_8<span class="token punctuation">)</span>
+    axs<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>set_title<span class="token punctuation">(</span><span class="token string">"restart_prob = 0.8"</span><span class="token punctuation">)</span>
+
+    plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="3-matplotlib"><a href="#3-matplotlib" class="headerlink" title="3.matplotlib"></a>3.matplotlib</h2><h3 id="1-显示中文"><a href="#1-显示中文" class="headerlink" title="1. 显示中文"></a>1. 显示中文</h3><p>如果有中文，需要设置这两句：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">plt<span class="token punctuation">.</span>rcParams<span class="token punctuation">[</span><span class="token string">'font.sans-serif'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'SimHei'</span><span class="token punctuation">]</span>  
+plt<span class="token punctuation">.</span>rcParams<span class="token punctuation">[</span><span class="token string">'axes.unicode_minus'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">False</span>  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>否则会报以下的错，且显示不出来中文：</p>
+<p><img src="C:\Users\LLKK\AppData\Roaming\Typora\typora-user-images\1647232686477.png" alt="显示中文报错"></p>
 
                 
             </div>
@@ -597,10 +675,6 @@ Global Options:
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/Python/">
-                                    <span class="chip bg-color">Python</span>
-                                </a>
                             
                                 <a href="/tags/Windows/">
                                     <span class="chip bg-color">Windows</span>
@@ -733,10 +807,6 @@ Global Options:
                 </div>
                 
                 <div class="card-action article-tags">
-                    
-                    <a href="/tags/Python/">
-                        <span class="chip bg-color">Python</span>
-                    </a>
                     
                     <a href="/tags/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
                         <span class="chip bg-color">图神经网络</span>
@@ -943,7 +1013,7 @@ Global Options:
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">4.2k</span>
+                        class="white-color">5.5k</span>
             
             
             
@@ -1184,25 +1254,9 @@ $(function () {
     
 
     <!-- 雪花特效 -->
-     
-        <script type="text/javascript">
-            // 只在桌面版网页启用特效
-            var windowWidth = $(window).width();
-            if (windowWidth > 768) {
-                document.write('<script type="text/javascript" src="/libs/others/snow.js"><\/script>');
-            }
-        </script>
     
 
     <!-- 鼠标星星特效 -->
-     
-        <script type="text/javascript">
-            // 只在桌面版网页启用特效
-            var windowWidth = $(window).width();
-            if (windowWidth > 768) {
-                document.write('<script type="text/javascript" src="/libs/others/star.js"><\/script>');
-            }
-        </script>
     
 
      
