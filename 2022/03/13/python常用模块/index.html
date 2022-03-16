@@ -469,21 +469,21 @@ with open(src, &#39;rb&#39;) as fsrc, o">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-14
+                    2022-03-15
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    576
+                    768
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    3 分
                 </div>
                 
 
@@ -567,6 +567,43 @@ res <span class="token operator">=</span> psutil<span class="token punctuation">
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>意为：总共16G内存，可用6.5G，已用61,3%，已使用10G，可用6.6G。</p>
+<h1 id="6-tqdm"><a href="#6-tqdm" class="headerlink" title="6.tqdm"></a>6.tqdm</h1><p>进度条工具。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> time
+<span class="token keyword">from</span> tqdm <span class="token keyword">import</span> trange
+
+dataset <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">*</span> <span class="token number">100</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> trange<span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>dataset<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.1</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<img src="/2022/03/13/python%E5%B8%B8%E7%94%A8%E6%A8%A1%E5%9D%97/%E8%BF%9B%E5%BA%A6%E6%9D%A1.png" class="" title="进度条">
+
+<p>给个简单的进度统计。</p>
+<h1 id="7-itemgetter"><a href="#7-itemgetter" class="headerlink" title="7. itemgetter"></a>7. itemgetter</h1><p>返回一个callable对象（即一个函数），函数作用是返回可迭代对象的第N个条目：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> operator
+
+f <span class="token operator">=</span> operator<span class="token punctuation">.</span>itemgetter<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+g <span class="token operator">=</span> operator<span class="token punctuation">.</span>itemgetter<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+x <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>g<span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># 0</span>
+<span class="token comment"># 1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>上例中，<code>f(x)</code>相当于<code>x[0]</code>。其实也相当于一个<code>lambda x:x[0]</code>。</p>
+<h1 id="8-字典类"><a href="#8-字典类" class="headerlink" title="8.字典类"></a>8.字典类</h1><h2 id="8-1-update方法"><a href="#8-1-update方法" class="headerlink" title="8.1 update方法"></a>8.1 update方法</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python">    d <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+        <span class="token string">"name"</span><span class="token punctuation">:</span> <span class="token string">"tom"</span><span class="token punctuation">,</span>
+        <span class="token string">"age"</span><span class="token punctuation">:</span> <span class="token number">20</span>
+    <span class="token punctuation">&#125;</span>
+    d2 <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+        <span class="token string">"name"</span><span class="token punctuation">:</span> <span class="token string">"jack"</span><span class="token punctuation">,</span>
+        <span class="token string">"sex"</span><span class="token punctuation">:</span> <span class="token string">"male"</span>
+    <span class="token punctuation">&#125;</span>
+    d<span class="token punctuation">.</span>update<span class="token punctuation">(</span>d2<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span>
+<span class="token comment"># &#123;'name': 'jack', 'age': 20, 'sex': 'male'&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>顾名思义，这函数根据参数中的字典数据，更新自己的数据。如果存在某个相同的键，则更新值；否则添加这个键。</p>
 
                 
             </div>
@@ -968,7 +1005,7 @@ res <span class="token operator">=</span> psutil<span class="token punctuation">
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">5.5k</span>
+                        class="white-color">8.6k</span>
             
             
             
