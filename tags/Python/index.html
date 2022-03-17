@@ -511,15 +511,6 @@
                 </a>
                 
                 
-                <a href="/tags/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/" title="编程思想: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="编程思想" style="background-color: #E8F8F5;">编程思想
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
                 <a href="/tags/Python/" title="Python: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-active "
@@ -538,29 +529,20 @@
                 </a>
                 
                 
+                <a href="/tags/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/" title="编程思想: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="编程思想" style="background-color: #E8F8F5;">编程思想
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
                 <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习: 2">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
                             data-tagname="深度学习" style="background-color: #F8C471;">深度学习
                         <span class="tag-length">2</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/%E7%88%AC%E8%99%AB/" title="爬虫: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="爬虫" style="background-color: #D7BDE2;">爬虫
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                <a href="/tags/selenium/" title="selenium: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="selenium" style="background-color: #D7BDE2;">selenium
-                        <span class="tag-length">1</span>
                     </span>
                 </a>
                 
@@ -579,6 +561,24 @@
                              chip-default "
                             data-tagname="Java" style="background-color: #FFF;">Java
                         <span class="tag-length">4</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/%E7%88%AC%E8%99%AB/" title="爬虫: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="爬虫" style="background-color: #D7BDE2;">爬虫
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/selenium/" title="selenium: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="selenium" style="background-color: #D7BDE2;">selenium
+                        <span class="tag-length">1</span>
                     </span>
                 </a>
                 
@@ -664,19 +664,19 @@
                 </a>
                 
                 
-                <a href="/tags/bug/" title="bug: 1">
+                <a href="/tags/%E8%8B%B1%E8%AF%AD/" title="英语: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="bug" style="background-color: #F8F9F9;">bug
+                            data-tagname="英语" style="background-color: #D5F5E3;">英语
                         <span class="tag-length">1</span>
                     </span>
                 </a>
                 
                 
-                <a href="/tags/%E8%8B%B1%E8%AF%AD/" title="英语: 1">
+                <a href="/tags/bug/" title="bug: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            data-tagname="英语" style="background-color: #D5F5E3;">英语
+                            data-tagname="bug" style="background-color: #F8F9F9;">bug
                         <span class="tag-length">1</span>
                     </span>
                 </a>
@@ -970,131 +970,6 @@ $(function () {
                                 } else {
                                     if (index_content < 0) {
                                         index_content = 0;
-                                    }
-                                    if (i === 0) {
-                                        first_occur = index_content;
-                                    }
-                                }
-                            });
-                        }
-                        // show search results
-                        if (isMatch) {
-                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
-                            var content = data.content.trim().replace(/<[^>]+>/g, "");
-                            if (first_occur >= 0) {
-                                // cut out 100 characters
-                                var start = first_occur - 20;
-                                var end = first_occur + 80;
-                                if (start < 0) {
-                                    start = 0;
-                                }
-                                if (start === 0) {
-                                    end = 100;
-                                }
-                                if (end > content.length) {
-                                    end = content.length;
-                                }
-                                var match_content = content.substr(start, end);
-                                // highlight all keywords
-                                keywords.forEach(function (keyword) {
-                                    var regS = new RegExp(keyword, "gi");
-                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
-                                });
-
-                                str += "<p class=\"search-result\">" + match_content + "...</p>"
-                            }
-                            str += "</li>";
-                        }
-                    });
-                    str += "</ul>";
-                    $resultContent.innerHTML = str;
-                });
-            }
-        });
-    };
-
-    searchFunc('/search.xml', 'searchInput', 'searchResult');
-});
-</script>
-
-    <!-- 回到顶部按钮 -->
-<div id="backTop" class="top-scroll">
-    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fas fa-arrow-up"></i>
-    </a>
-</div>
-
-
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="/js/matery.js"></script>
-
-    
-
-    
-
-    <!-- 雪花特效 -->
-    
-
-    <!-- 鼠标星星特效 -->
-    
-
-     
-        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
-        <script src="/libs/others/TencentCaptcha.js"></script>
-        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
-    
-
-    <!-- Baidu Analytics -->
-
-    <!-- Baidu Push -->
-
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-    
-    <script src="/libs/others/clicklove.js" async="async"></script>
-    
-    
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
-    
-
-    
-
-    
-
-    <!--腾讯兔小巢-->
-    
-    
-
-    
-
-    
-    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
-    
-
-    
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
-    
-
-</body>
-
-</html>
- index_content = 0;
                                     }
                                     if (i === 0) {
                                         first_occur = index_content;

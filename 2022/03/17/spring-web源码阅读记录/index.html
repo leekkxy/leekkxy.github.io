@@ -636,13 +636,12 @@
 <p>最终经过一番调用，是在这里找到最佳匹配的handler的：</p>
 <img src="/2022/03/17/spring-web%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/%E5%8C%B9%E9%85%8Dhandler.png" class="" title="匹配handler">
 
-<h2 id="3-如何调用handler的？"><a href="#3-如何调用handler的？" class="headerlink" title="3.如何调用handler的？"></a>3.如何调用handler的？</h2><p>找到当前请求对应的Handler之后，就该调用这个Handler了。但是等等，在调用之前，还有一些工作要做，比如这个Handler中的参数，是需要”注入”的。这个“注入”的过程，就是HandlerAdapter的工作。在处理好参数后，HandlerAdapter就会利用反射，调用这个Handler方法。但并不是所有的handler公用一个Adapter的。一共有四个Adapter，不过我们写的Controller对应的Adapter只有一个。</p>
-<p>DispatcherServlet将所有的Adapter放到HandlerAdapters字段中。默认有四个Adapter，常用的是第一个，即<code>RequestHandlerMappingAdapter</code>：</p>
+<h2 id="3-如何调用handler的？"><a href="#3-如何调用handler的？" class="headerlink" title="3.如何调用handler的？"></a>3.如何调用handler的？</h2><h3 id="1-寻找Adapter"><a href="#1-寻找Adapter" class="headerlink" title="1.寻找Adapter"></a>1.寻找Adapter</h3><p>找到当前请求对应的Handler之后，就该调用这个Handler了。但是等等，在调用之前，还有一些工作要做，比如这个Handler中的参数，是需要”注入”的。这个“注入”的过程，就是HandlerAdapter的工作。在处理好参数后，HandlerAdapter就会利用反射，调用这个Handler方法。但并不是所有的handler公用一个Adapter的。一共有四个Adapter。DispatcherServlet将所有的Adapter放到HandlerAdapters字段中：</p>
 <img src="/2022/03/17/spring-web%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/HandlerAdapters.png" class="" title="HandlerAdapters">
 
-<p>在找到mappedHandler后，就要找这个mappedHandler对应的适配器了。这一步通过下面一句代码实现：</p>
+<p>不过我们写的Controller对应的Adapter只有一个，即<code>RequestHandlerMappingAdapter</code>。找到对应的Adapter是通过下面这句实现的：</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">HandlerAdapter</span> ha <span class="token operator">=</span> <span class="token function">getHandlerAdapter</span><span class="token punctuation">(</span>mappedHandler<span class="token punctuation">.</span><span class="token function">getHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><code>getHandlerAdapterd</code>的源码是：</p>
+<p><code>getHandlerAdapter</code>的源码是：</p>
 <pre class="line-numbers language-java" data-language="java"><div class="caption"><span>DispatcherServlet</span></div><code class="language-java"><span class="token keyword">protected</span> <span class="token class-name">HandlerAdapter</span> <span class="token function">getHandlerAdapter</span><span class="token punctuation">(</span><span class="token class-name">Object</span> handler<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ServletException</span> <span class="token punctuation">&#123;</span>
 		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>handlerAdapters <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 			<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">HandlerAdapter</span> adapter <span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>handlerAdapters<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -652,20 +651,20 @@
 			<span class="token punctuation">&#125;</span>
 		<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>它仅是遍历自己所有的Adapter，然后看它是否支持当前的handler。如果支持则返回这个Adapter。<code>adapter.supports</code>的代码如下：</p>
-<pre class="line-numbers language-java" data-language="java"><div class="caption"><span>类AbstractHandlerMethodAdapter</span></div><code class="language-java"><span class="token annotation punctuation">@Override</span>
+<p>它仅是遍历自己所有的Adapter，然后看它是否支持当前的handler，如果支持则返回这个Adapter。<code>adapter.supports</code>的代码如下：</p>
+<pre class="line-numbers language-java" data-language="java"><div class="caption"><span>AbstractHandlerMethodAdapter</span></div><code class="language-java"><span class="token annotation punctuation">@Override</span>
 	<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">supports</span><span class="token punctuation">(</span><span class="token class-name">Object</span> handler<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 		<span class="token keyword">return</span> <span class="token punctuation">(</span>handler <span class="token keyword">instanceof</span> <span class="token class-name">HandlerMethod</span> <span class="token operator">&amp;&amp;</span> <span class="token function">supportsInternal</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">HandlerMethod</span><span class="token punctuation">)</span> handler<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>supportsInternal</code>方法为：</p>
-<pre class="line-numbers language-java" data-language="java"><div class="caption"><span>public class RequestMappingHandlerAdapter extends AbstractHandlerMethodAdapter</span></div><code class="language-java"><span class="token annotation punctuation">@Override</span>
+<p>它先判断传来的handler是否为<code>HandlerMethod</code>类型，然后再执行判断。<code>supportsInternal</code>方法为：</p>
+<pre class="line-numbers language-java" data-language="java"><div class="caption"><span>RequestMappingHandlerAdapter</span></div><code class="language-java"><span class="token annotation punctuation">@Override</span>
 	<span class="token keyword">protected</span> <span class="token keyword">boolean</span> <span class="token function">supportsInternal</span><span class="token punctuation">(</span><span class="token class-name">HandlerMethod</span> handlerMethod<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 		<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
 	<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>可以看到，这个<code>RequestMappingHandlerAdapter</code>类就可以处理当前的handler，因为它的判断方法永远返回<code>true</code>。</p>
-<p>因此，这个<code>RequestMappingHandlerAdapter</code>就被返回到<code>Dispatcherservlet</code>中了。</p>
-<h3 id="1-HandlerAdapter"><a href="#1-HandlerAdapter" class="headerlink" title="1.HandlerAdapter"></a>1.HandlerAdapter</h3><p>前面很多代码引用了HandlerAdapter中的。我们再看一下<code>HandlerAdapter</code>源码。</p>
+<p>因此，这个<code>RequestMappingHandlerAdapter</code>就作为当前handler的Adapter，被返回到<code>Dispatcherservlet</code>中了。</p>
+<h3 id="2-补充：HandlerAdapter"><a href="#2-补充：HandlerAdapter" class="headerlink" title="2.补充：HandlerAdapter"></a>2.补充：HandlerAdapter</h3><p>前面很HandlerAdapter中的代码。我们再插播一下<code>HandlerAdapter</code>源码。</p>
 <p>这是一个接口，有仨方法：</p>
 <pre class="line-numbers language-java" data-language="java"><div class="caption"><span>HandlerAdapter</span></div><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">HandlerAdapter</span> <span class="token punctuation">&#123;</span>
 
@@ -680,7 +679,8 @@
 
 <p>其中第一个方法是判断当前adapter是否支持当前handler；</p>
 <p>第二个方法是拿着当前的req和resp，去调用handler方法。</p>
-<h3 id="2-开始调用handler…"><a href="#2-开始调用handler…" class="headerlink" title="2.开始调用handler…"></a>2.开始调用handler…</h3><h4 id="1"><a href="#1" class="headerlink" title="1"></a>1</h4><pre class="line-numbers language-java" data-language="java"><div class="caption"><span>DispatcherServlet</span></div><code class="language-java"><span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">doDispatch</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> request<span class="token punctuation">,</span> <span class="token class-name">HttpServletResponse</span> response<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+<p>第三个不太重要….</p>
+<h3 id="3-为handler设置Resolver和Handler"><a href="#3-为handler设置Resolver和Handler" class="headerlink" title="3.为handler设置Resolver和Handler"></a>3.为handler设置Resolver和Handler</h3><pre class="line-numbers language-java" data-language="java"><div class="caption"><span>DispatcherServlet</span></div><code class="language-java"><span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">doDispatch</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> request<span class="token punctuation">,</span> <span class="token class-name">HttpServletResponse</span> response<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
 <span class="token comment">//......</span>
 	<span class="token class-name">HandlerAdapter</span> ha <span class="token operator">=</span> <span class="token function">getHandlerAdapter</span><span class="token punctuation">(</span>mappedHandler<span class="token punctuation">.</span><span class="token function">getHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">//.....</span>
@@ -688,17 +688,21 @@
 <span class="token comment">//.....</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>在找到了Adapter后，就可以调用handler方法了。上面列出的依然是<code> doDispatch()</code>方法中的片段。这里调用的是<code>handle()</code>方法，这个方法在熟悉的<code>AbstractHandlerMethodAdapter</code>类中实现了：</p>
-<pre class="line-numbers language-java" data-language="java"><div class="caption"><span>AbstractHandlerMethodAdapter</span></div><code class="language-java"><span class="token comment">/**
- * This implementation expects the handler to be an &#123;@link HandlerMethod&#125;.
- */</span>
-<span class="token annotation punctuation">@Override</span>
+<p>在找到了Adapter后，就可以调用Adapter的handle方法了。handle方法主要做了两件事：</p>
+<ul>
+<li><p>为handler设置解析器、处理器。</p>
+</li>
+<li><p>调用handler方法。</p>
+</li>
+</ul>
+<p>上面列出的依然是<code> doDispatch()</code>方法中的片段。这里调用的是<code>handle()</code>方法，这个方法在熟悉的<code>AbstractHandlerMethodAdapter</code>类中被实现了：</p>
+<pre class="line-numbers language-java" data-language="java"><div class="caption"><span>AbstractHandlerMethodAdapter</span></div><code class="language-java"><span class="token annotation punctuation">@Override</span>
 <span class="token annotation punctuation">@Nullable</span>
 <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token class-name">ModelAndView</span> <span class="token function">handle</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> request<span class="token punctuation">,</span> <span class="token class-name">HttpServletResponse</span> response<span class="token punctuation">,</span> <span class="token class-name">Object</span> handler<span class="token punctuation">)</span>
 		<span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
 
 	<span class="token keyword">return</span> <span class="token function">handleInternal</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token class-name">HandlerMethod</span><span class="token punctuation">)</span> handler<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>handleInternal</code>方法才是真正的处理代码：</p>
 <pre class="line-numbers language-java" data-language="java"><div class="caption"><span>RequestMappingHandlerAdapter</span></div><code class="language-java"><span class="token annotation punctuation">@Override</span>
 	<span class="token keyword">protected</span> <span class="token class-name">ModelAndView</span> <span class="token function">handleInternal</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> request<span class="token punctuation">,</span>
@@ -709,7 +713,7 @@
 		<span class="token keyword">return</span> mav<span class="token punctuation">;</span>
 	<span class="token punctuation">&#125;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>上面这个函数最关键的一句已经在代码中标出。就是<code>invokeHandlerMethod</code>这个方法。继续看这个方法（只列出了关键的两句）：</p>
+<p>上面这个函数最关键的，就是调用<code>invokeHandlerMethod</code>方法一句。继续看这个方法（只列出了关键的两句）：</p>
 <pre class="line-numbers language-java" data-language="java"><div class="caption"><span>RequestMappingHandlerAdapter</span></div><code class="language-java">
 <span class="token annotation punctuation">@Nullable</span>
 <span class="token keyword">protected</span> <span class="token class-name">ModelAndView</span> <span class="token function">invokeHandlerMethod</span><span class="token punctuation">(</span><span class="token class-name">HttpServletRequest</span> request<span class="token punctuation">,</span>
@@ -726,14 +730,14 @@
     <span class="token comment">//...</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>这里它判断<code>this.argumentResolvers</code> 和<code>this.returnValueHandlers</code>是否为空，然后让这些解析器去处理参数映射、返回值映射啥的。debug可以看一下这两个参数的内容：</p>
+<p>这里它判断<code>this.argumentResolvers</code> 和<code>this.returnValueHandlers</code>是否为空，然后将其设置为handler的字段。这里解析器、处理器用来处理参数映射、返回值映射啥的。debug一下这两个参数的内容：</p>
 <img src="/2022/03/17/spring-web%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/%E8%BF%94%E5%9B%9E%E5%80%BC%E5%A4%84%E7%90%86%E5%99%A8%E5%92%8C%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90%E5%99%A8.png" class="" title="返回值处理器和参数解析器">
 
 <p>可以看到，参数解析器长度为26。那么我们可以查看一下这是26个什么对象：</p>
 <img src="/2022/03/17/spring-web%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/26%E4%B8%AA%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90%E5%99%A8.png" class="" title="26个参数解析器">
 
-<p>这些名字很熟悉！正是在编写Controller时用到的参数映射的注解！<br>然后看列出的的最后一句<code>invocableMethod.invokeAndHandle(webRequest, mavContainer);</code>：<br>这里开始调用Method对象的方法了：</p>
-<pre class="line-numbers language-java" data-language="java"><div class="caption"><span>ServletInvocableHandlerMethod</span></div><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invokeAndHandle</span><span class="token punctuation">(</span><span class="token class-name">ServletWebRequest</span> webRequest<span class="token punctuation">,</span> <span class="token class-name">ModelAndViewContainer</span> mavContainer<span class="token punctuation">,</span><span class="token class-name">Object</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> providedArgs<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+<p>这些名字很熟悉！正是在编写Controller时用到的参数映射的注解！<br>然后看列出的的最后一句<code>invocableMethod.invokeAndHandle(webRequest, mavContainer);</code>，从这里开始调用Method对象的方法了。</p>
+<h3 id="4-HandlerMethod"><a href="#4-HandlerMethod" class="headerlink" title="4.HandlerMethod"></a>4.HandlerMethod</h3><pre class="line-numbers language-java" data-language="java"><div class="caption"><span>ServletInvocableHandlerMethod</span></div><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invokeAndHandle</span><span class="token punctuation">(</span><span class="token class-name">ServletWebRequest</span> webRequest<span class="token punctuation">,</span> <span class="token class-name">ModelAndViewContainer</span> mavContainer<span class="token punctuation">,</span><span class="token class-name">Object</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> providedArgs<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
 
 		<span class="token class-name">Object</span> returnValue <span class="token operator">=</span> <span class="token function">invokeForRequest</span><span class="token punctuation">(</span>webRequest<span class="token punctuation">,</span> mavContainer<span class="token punctuation">,</span> providedArgs<span class="token punctuation">)</span><span class="token punctuation">;</span>
 		<span class="token comment">//...</span>
@@ -749,8 +753,7 @@
 		<span class="token keyword">return</span> <span class="token function">doInvoke</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">&#125;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这里首先调用<code>getMethodArgumentValues</code>获取参数的真值，然后开始真正的调用。来看下是如何获取所有参数的真值的：</p>
+<h3 id="5-获取参数的真值"><a href="#5-获取参数的真值" class="headerlink" title="5.获取参数的真值"></a>5.获取参数的真值</h3><p>这里首先调用<code>getMethodArgumentValues</code>获取参数的真值，然后开始真正的调用。来看下是如何获取所有参数的真值的：</p>
 <pre class="line-numbers language-java" data-language="java"><div class="caption"><span>InvocableHandlerMethod</span></div><code class="language-java"><span class="token keyword">protected</span> <span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getMethodArgumentValues</span><span class="token punctuation">(</span><span class="token class-name">NativeWebRequest</span> request<span class="token punctuation">,</span> <span class="token annotation punctuation">@Nullable</span> <span class="token class-name">ModelAndViewContainer</span> mavContainer<span class="token punctuation">,</span>
 		<span class="token class-name">Object</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> providedArgs<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
 
@@ -791,7 +794,8 @@
 
 
 <p>它首先获取了所有的参数。看一下这所有的参数都有什么：</p>
-<p><img src="C:\Users\LLKK\AppData\Roaming\Typora\typora-user-images\1647495813427.png" alt="所有的参数列表"></p>
+<img src="/2022/03/17/spring-web%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/%E6%89%80%E6%9C%89%E7%9A%84%E5%8F%82%E6%95%B0%E5%88%97%E8%A1%A8.png" class="" title="所有的参数列表">
+
 <p>发现有仨。这是因为，当前请求的路径是<a target="_blank" rel="noopener" href="http://localhost/test/1/tom">http://localhost/test/1/tom</a> ，而这个URL的handler是：</p>
 <pre class="line-numbers language-java" data-language="java"><div class="caption"><span>UserController</span></div><code class="language-java"><span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/test/&#123;id&#125;/&#123;name&#125;"</span><span class="token punctuation">)</span>
    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getTest</span><span class="token punctuation">(</span><span class="token annotation punctuation">@PathVariable</span><span class="token punctuation">(</span><span class="token string">"id"</span><span class="token punctuation">)</span> <span class="token class-name">Integer</span> id<span class="token punctuation">,</span>
@@ -803,7 +807,8 @@
 
 <p>也就是说，所有的参数列表就是这三个参数！</p>
 <p>点开第一个参数，一窥其注解：</p>
-<p><img src="C:\Users\LLKK\AppData\Roaming\Typora\typora-user-images\1647495965638.png" alt="第一个参数对象上的注解信息"></p>
+<img src="/2022/03/17/spring-web%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%E5%AF%B9%E8%B1%A1%E4%B8%8A%E7%9A%84%E6%B3%A8%E8%A7%A3%E4%BF%A1%E6%81%AF.png" class="" title="第一个参数对象上的注解信息">
+
 <p>可以看到，这里有一个<code>@PathVariable</code>注解信息！这正是Controller代码中写好的。</p>
 <p>这才仅是看了第一句。来往后看：</p>
 <p>首先判断参数列表是否为空，若空则返回空列表；若不空，创建对应长度的参数列表数组：</p>
@@ -835,8 +840,7 @@
 	<span class="token keyword">return</span> args<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这里需要插一段解析器的代码，是<code>this.resolvers.supportsParameter(parameter)</code>这一句的：</p>
+<h3 id="6-解析器判断是否支持当前Parameter"><a href="#6-解析器判断是否支持当前Parameter" class="headerlink" title="6.解析器判断是否支持当前Parameter"></a>6.解析器判断是否支持当前Parameter</h3><p>这里需要插一段解析器的代码，是<code>this.resolvers.supportsParameter(parameter)</code>这一句的：</p>
 <pre class="line-numbers language-java" data-language="java"><div class="caption"><span>HandlerMethodArgumentResolverComposite</span></div><code class="language-java"><span class="token annotation punctuation">@Override</span>
 	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">supportsParameter</span><span class="token punctuation">(</span><span class="token class-name">MethodParameter</span> parameter<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 		<span class="token keyword">return</span> <span class="token function">getArgumentResolver</span><span class="token punctuation">(</span>parameter<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
@@ -858,9 +862,9 @@
 		<span class="token keyword">return</span> result<span class="token punctuation">;</span>
 	<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>这方法首先看有没有缓存，若没有，再遍历所有（刚才的那26）个解析器，一一查看其是否支持解析当前的参数。若有一个支持的，则也把这个解析器放到缓存。</p>
-<p>继续看<code>resolver.supportsParameter(parameter)</code>是如何实现的：</p>
-<p>因为这是个遍历的过程，所以首先遍历的是<code>RequestParamMethodArgumentResolver</code>类。这个类当然不能解析<code>@PathVariable</code>注解的参数。所以是返回false。不过这不影响我们简单看一下这个类的源码，毕竟debug也不好跳过它（皱眉头）：</p>
+<p>这方法首先看缓存里有没有解析器。若没有，再遍历所有（刚才的那26个）解析器，一一查看其是否支持解析当前的参数。若有一个支持的，则也把这个解析器放到缓存，并且返回<code>true</code>。</p>
+<p>继续看循环遍历中的判断<code>resolver.supportsParameter(parameter)</code>是如何实现的：</p>
+<p>这是个遍历的过程，第一个遇到的是<code>RequestParamMethodArgumentResolver</code>类。这个类当然不能解析<code>@PathVariable</code>注解的参数。所以是返回false。不过这不影响我们简单看一下这个类的源码，毕竟debug也不好跳过它（皱眉头）：</p>
 <pre class="line-numbers language-java" data-language="java"><div class="caption"><span>RequestParamMethodArgumentResolver</span></div><code class="language-java"><span class="token annotation punctuation">@Override</span>
 	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">supportsParameter</span><span class="token punctuation">(</span><span class="token class-name">MethodParameter</span> parameter<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 		<span class="token keyword">if</span> <span class="token punctuation">(</span>parameter<span class="token punctuation">.</span><span class="token function">hasParameterAnnotation</span><span class="token punctuation">(</span><span class="token class-name">RequestParam</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -890,7 +894,7 @@
 <span class="token punctuation">&#125;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>这次是<code>RequestParamMapMethodArgumentResolver</code>解析器。它也是判断是否有响应的注解，并且还有附加条件。都满足才返回<code>true</code>。这也不是我们想要的，所以，进行下一次迭代：</p>
+<p>这次是<code>RequestParamMapMethodArgumentResolver</code>解析器。它也是判断是否有相应的注解，并且还有附加条件，都满足才返回<code>true</code>。这也不是我们想要的，所以，进行下一次迭代：</p>
 <pre class="line-numbers language-java" data-language="java"><div class="caption"><span>PathVariableMethodArgumentResolver</span></div><code class="language-java"><span class="token annotation punctuation">@Override</span>
 	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">supportsParameter</span><span class="token punctuation">(</span><span class="token class-name">MethodParameter</span> parameter<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>parameter<span class="token punctuation">.</span><span class="token function">hasParameterAnnotation</span><span class="token punctuation">(</span><span class="token class-name">PathVariable</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
