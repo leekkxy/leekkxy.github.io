@@ -907,7 +907,7 @@
 		<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
 	<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>终于迭代到匹配的解析器了。可以看到，这个判断逻辑还是很粗暴的：如果没有标对应的注解，直接先返回<code>false</code>。然后判断是否有<code>Map</code>类型的参数，这需要额外处理（回想：当标注了<code>Map</code>参数时，其中包含了所有的路径参数信息）。这次实验中，第一个参数并不是<code>Map</code>类型，因此不考虑这一步，方法直接返回<code>true</code>。</p>
+<p>终于迭代到匹配的解析器了。可以看到，这个判断逻辑还是很粗暴的：如果没有标对应的注解，直接先返回<code>false</code>。然后判断是否有<code>Map</code>类型的参数，这需要额外处理（回想：当标注了<code>Map</code>参数时，其中包含了所有的路径参数信息）。这次实验中，第一个参数并不是<code>Map</code>类型，因此不考虑这一步，方法直接返回<code>true</code>。 </p>
 
                 
             </div>
