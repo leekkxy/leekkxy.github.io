@@ -448,6 +448,10 @@ impo">
                                 <span class="chip bg-color">图神经网络</span>
                             </a>
                         
+                            <a href="/tags/dgl/">
+                                <span class="chip bg-color">dgl</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -467,21 +471,21 @@ impo">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-03-14
+                    2022-03-15
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    1.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    7 分
                 </div>
                 
 
@@ -671,6 +675,31 @@ dgl<span class="token punctuation">.</span>save_graphs<span class="token punctua
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">filename<span class="token operator">=</span><span class="token string">"small.bin"</span>
 graph_sizes <span class="token operator">=</span> load_labels<span class="token punctuation">(</span>filename<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token string">"graph_sizes"</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
+<h2 id="5-卷积层"><a href="#5-卷积层" class="headerlink" title="5.卷积层"></a>5.卷积层</h2><p><code>GINConv()</code>演示：</p>
+<p>即，输入是一个图和其特征，输出是经过一层卷积后的节点的特征。参见<a target="_blank" rel="noopener" href="https://docs.dgl.ai/_modules/dgl/nn/pytorch/conv/ginconv.html#GINConv.forward">文档。</a></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">input_dim <span class="token operator">=</span> <span class="token number">3</span>
+n <span class="token operator">=</span> <span class="token number">5</span>
+g <span class="token operator">=</span> dgl<span class="token punctuation">.</span>rand_graph<span class="token punctuation">(</span>n<span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span>
+h <span class="token operator">=</span> torch<span class="token punctuation">.</span>ones<span class="token punctuation">(</span>n<span class="token punctuation">,</span> input_dim<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>GINConv<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span>h<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># tensor([[4., 4., 4.],</span>
+<span class="token comment">#         [4., 4., 4.],</span>
+<span class="token comment">#         [5., 5., 5.],</span>
+<span class="token comment">#         [6., 6., 6.],</span>
+<span class="token comment">#         [6., 6., 6.]])</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="6-TUDataset"><a href="#6-TUDataset" class="headerlink" title="6.TUDataset"></a>6.TUDataset</h2><p>这是在“<a target="_blank" rel="noopener" href="https://docs.dgl.ai/api/python/dgl.data.html#graph-prediction-datasets">图预测</a>”数据集里的。这个类的实例的<code>__getitem__</code>方法返回一个元组：<code>(dgl.Graph, Tensor)</code>，其中前者是图，后者是图对应的标签。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">dataset <span class="token operator">=</span> TUDataset<span class="token punctuation">(</span><span class="token string">"enzymes"</span><span class="token punctuation">,</span>raw_dir<span class="token operator">=</span><span class="token string">"data"</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> g<span class="token punctuation">,</span>label <span class="token keyword">in</span> dataset<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>g<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>label<span class="token punctuation">)</span>
+    <span class="token keyword">break</span>
+<span class="token comment"># Graph(num_nodes=37, num_edges=168,</span>
+<span class="token comment">#       ndata_schemes=&#123;'node_labels': Scheme(shape=(1,), dtype=torch.int64), 'node_attr': Scheme(shape=(18,), dtype=torch.float64), '_ID': Scheme(shape=(), dtype=torch.int64)&#125;</span>
+<span class="token comment">#       edata_schemes=&#123;'_ID': Scheme(shape=(), dtype=torch.int64)&#125;)</span>
+<span class="token comment"># tensor([5], dtype=torch.int32)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
@@ -737,6 +766,10 @@ graph_sizes <span class="token operator">=</span> load_labels<span class="token 
                             
                                 <a href="/tags/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
                                     <span class="chip bg-color">图神经网络</span>
+                                </a>
+                            
+                                <a href="/tags/dgl/">
+                                    <span class="chip bg-color">dgl</span>
                                 </a>
                             
                         </div>
@@ -1076,7 +1109,7 @@ graph_sizes <span class="token operator">=</span> load_labels<span class="token 
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">8.6k</span>
+                        class="white-color">10.3k</span>
             
             
             
