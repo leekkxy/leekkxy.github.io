@@ -636,8 +636,8 @@
 <p>最终经过一番调用，是在这里找到最佳匹配的handler的：</p>
 <img src="/2022/03/17/spring-web%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/%E5%8C%B9%E9%85%8Dhandler.png" class="" title="匹配handler">
 
-<h2 id="3-如何调用handler的？"><a href="#3-如何调用handler的？" class="headerlink" title="3.如何调用handler的？"></a>3.如何调用handler的？</h2><p>找到当前请求对应的Handler之后，就该调用这个Handler了。但是等等，在调用之前，还有一些工作要做，比如这个Handler中的参数，是需要”注入”的。这个“注入”的过程，就是HandlerAdapters的工作。在处理好参数后，HandlerAdapter就会利用反射，调用这个Handler方法。</p>
-<p>DispatcherServlet将所有的Adapter放到HandlerAdapters字段中，默认有四个Adapter。常用的就是第一个：</p>
+<h2 id="3-如何调用handler的？"><a href="#3-如何调用handler的？" class="headerlink" title="3.如何调用handler的？"></a>3.如何调用handler的？</h2><p>找到当前请求对应的Handler之后，就该调用这个Handler了。但是等等，在调用之前，还有一些工作要做，比如这个Handler中的参数，是需要”注入”的。这个“注入”的过程，就是HandlerAdapter的工作。在处理好参数后，HandlerAdapter就会利用反射，调用这个Handler方法。但并不是所有的handler公用一个Adapter的。一共有四个Adapter，不过我们写的Controller对应的Adapter只有一个。</p>
+<p>DispatcherServlet将所有的Adapter放到HandlerAdapters字段中。默认有四个Adapter，常用的是第一个，即<code>RequestHandlerMappingAdapter</code>：</p>
 <img src="/2022/03/17/spring-web%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/HandlerAdapters.png" class="" title="HandlerAdapters">
 
 <p>在找到mappedHandler后，就要找这个mappedHandler对应的适配器了。这一步通过下面一句代码实现：</p>
