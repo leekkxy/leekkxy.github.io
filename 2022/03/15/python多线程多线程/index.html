@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="python多线程多线程, Lk&#39;s Blog">
-    <meta name="description" content="1.多进程进程是分配资源的最小单位。分配完资源后，由线程来执行进程中的任务。所以，可以将进程当做线程的容器。线程间共享进程的资源。
-启动一个python脚本后，就创建了一个进程，并创建一个主线程执行代码。各个变量就是属于这个进程的资源，后续">
+    <meta name="description" content="0.Python中的进程与线程进程是分配资源的最小单位。分配完资源后，由线程来执行进程中的任务。所以，可以将进程当做线程的容器。线程间共享进程的资源。
+启动一个python脚本后，就创建了一个进程，并创建一个主线程执行代码。各个变量就是属于">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -31,7 +31,7 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.1"></head>
+<meta name="generator" content="Hexo 6.1.0"></head>
 
 
 
@@ -475,7 +475,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="1-多进程"><a href="#1-多进程" class="headerlink" title="1.多进程"></a>1.多进程</h1><p>进程是分配资源的最小单位。分配完资源后，由线程来执行进程中的任务。所以，可以将进程当做线程的容器。线程间共享进程的资源。</p>
+                <h2 id="0-Python中的进程与线程"><a href="#0-Python中的进程与线程" class="headerlink" title="0.Python中的进程与线程"></a>0.Python中的进程与线程</h2><p>进程是分配资源的最小单位。分配完资源后，由线程来执行进程中的任务。所以，可以将进程当做线程的容器。线程间共享进程的资源。</p>
 <p>启动一个python脚本后，就创建了一个进程，并创建一个主线程执行代码。各个变量就是属于这个进程的资源，后续创建的线程共享这些资源。</p>
 <h2 id="1-实现多进程"><a href="#1-实现多进程" class="headerlink" title="1.实现多进程"></a>1.实现多进程</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> multiprocessing
 <span class="token keyword">import</span> time
@@ -491,7 +491,7 @@
     p2<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="2-给方法传参"><a href="#2-给方法传参" class="headerlink" title="2.给方法传参"></a>2.给方法传参</h2><p>有两种参数可以传：</p>
+<h2 id="2-给方法传参"><a href="#2-给方法传参" class="headerlink" title="2.给方法传参"></a>2.给方法传参</h2><p>有两种参数（位置参数、关键字参数）可以传：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> multiprocessing
 <span class="token keyword">import</span> time
 
